@@ -8,7 +8,7 @@ namespace PracticeProject.Models
         public int IdCourse { get; set; }
 
         //[ForeignKey("Grupa")]
-        public int IdGrupa { get; set; }
+        public string IdGrupa { get; set; }
 
         public virtual Grupa Grupa { get; set; }
         public virtual Course Course { get; set; }

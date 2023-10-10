@@ -11,8 +11,8 @@ using PracticeProject.Data;
 namespace PracticeProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231009221219_FKWorks")]
-    partial class FKWorks
+    [Migration("20231010163222_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,8 +52,8 @@ namespace PracticeProject.Migrations
                     b.Property<int>("IdCourse")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdGrupa")
-                        .HasColumnType("int");
+                    b.Property<string>("IdGrupa")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IdCourse", "IdGrupa");
 
@@ -64,11 +64,8 @@ namespace PracticeProject.Migrations
 
             modelBuilder.Entity("PracticeProject.Models.Grupa", b =>
                 {
-                    b.Property<int>("Code")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Code"));
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FullName")
                         .IsRequired()

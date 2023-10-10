@@ -1,10 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using PracticeProject.Data;
+using PracticeProject.Interfaces;
+using PracticeProject.Reposiory;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

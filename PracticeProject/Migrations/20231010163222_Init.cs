@@ -5,7 +5,7 @@
 namespace PracticeProject.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,8 +28,7 @@ namespace PracticeProject.Migrations
                 name: "Grupas",
                 columns: table => new
                 {
-                    Code = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -65,7 +64,7 @@ namespace PracticeProject.Migrations
                 columns: table => new
                 {
                     IdCourse = table.Column<int>(type: "int", nullable: false),
-                    IdGrupa = table.Column<int>(type: "int", nullable: false)
+                    IdGrupa = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,14 +106,13 @@ namespace PracticeProject.Migrations
                 columns: table => new
                 {
                     IdLesson = table.Column<int>(type: "int", nullable: false),
-                    Task = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LessonId = table.Column<int>(type: "int", nullable: false)
+                    Task = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.ForeignKey(
-                        name: "FK_LabWorks_Lessons_LessonId",
-                        column: x => x.LessonId,
+                        name: "FK_LabWorks_Lessons_IdLesson",
+                        column: x => x.IdLesson,
                         principalTable: "Lessons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -126,14 +124,13 @@ namespace PracticeProject.Migrations
                 {
                     IdLesson = table.Column<int>(type: "int", nullable: false),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LessonId = table.Column<int>(type: "int", nullable: false)
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.ForeignKey(
-                        name: "FK_TextWorks_Lessons_LessonId",
-                        column: x => x.LessonId,
+                        name: "FK_TextWorks_Lessons_IdLesson",
+                        column: x => x.IdLesson,
                         principalTable: "Lessons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -150,9 +147,9 @@ namespace PracticeProject.Migrations
                 column: "IdLesson");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LabWorks_LessonId",
+                name: "IX_LabWorks_IdLesson",
                 table: "LabWorks",
-                column: "LessonId");
+                column: "IdLesson");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lessons_IdCourse",
@@ -160,9 +157,9 @@ namespace PracticeProject.Migrations
                 column: "IdCourse");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TextWorks_LessonId",
+                name: "IX_TextWorks_IdLesson",
                 table: "TextWorks",
-                column: "LessonId");
+                column: "IdLesson");
         }
 
         /// <inheritdoc />

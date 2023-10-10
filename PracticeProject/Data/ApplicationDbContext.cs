@@ -28,7 +28,7 @@ namespace PracticeProject.Data
             modelBuilder.Entity<CourseGrupa>().HasOne(p => p.Course).WithMany(pc => pc.courseGrupas).HasForeignKey(p => p.IdCourse);
             modelBuilder.Entity<CourseGrupa>().HasOne(p => p.Grupa).WithMany(pc => pc.courseGrupas).HasForeignKey(c => c.IdGrupa);
 
-            modelBuilder.Entity<Grupa>().HasKey(g => new { g.Code });
+            //modelBuilder.Entity<Grupa>().HasKey(g => new { g.Code });
             modelBuilder.Entity<HomeWork>().HasNoKey();
             modelBuilder.Entity<LabWork>().HasNoKey();
             modelBuilder.Entity<TextWork>().HasNoKey();

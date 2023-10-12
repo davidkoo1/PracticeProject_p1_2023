@@ -16,4 +16,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\HomeWork\" />
+    <Folder Include="Views\LabWork\" />
+    <Folder Include="Views\TextWork\" />
+  </ItemGroup>
+
 </Project>

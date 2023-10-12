@@ -24,39 +24,20 @@
                     <h3>@course.Name</h3>
                     @foreach (var grupa in course.courseGrupas)
                     {
-                        <p>@grupa.Grupa.Code</p>
+                        <span><p>@grupa.Grupa.Code</p></span>
                     }
-                    <a href="#">Перейти</a>
+                    <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = 1})">
+                        Перейти
+                    </a>
                 </div>
             }
-                        <div class="course">
-                <h3>Курс 2: Название курса</h3>
-                <p>Описание курса. Здесь можно описать содержание и цели курса.</p>
-                <a href="#">Начать курс</a>
-            </div>
-            <div class="course">
-                <h3>Курс 2: Название курса</h3>
-                <p>Описание курса. Здесь можно описать содержание и цели курса.</p>
-                <a href="#">Начать курс</a>
-            </div>
-            <div class="course">
-                <h3>Курс 2: Название курса</h3>
-                <p>Описание курса. Здесь можно описать содержание и цели курса.</p>
-                <a href="#">Начать курс</a>
-            </div>
-            <div class="course">
-                <h3>Курс 2: Название курса</h3>
-                <p>Описание курса. Здесь можно описать содержание и цели курса.</p>
-                <a href="#">Начать курс</a>
-            </div>
-            <div class="course">
-                <h3>Курс 2: Название курса</h3>
-                <p>Описание курса. Здесь можно описать содержание и цели курса.</p>
-                <a href="#">Начатс курс</a>
-            </div>
         </section>
     </main>
 </body>
 </html>
 
-
+@* <a href="@Url.Action(course.Name, "Course")">
+                        Перейти
+                    </a>
+                <a asp-controller="Course" asp-action="Detail" asp-route-id ="@course.Id">Перейти</a>
+                    *@

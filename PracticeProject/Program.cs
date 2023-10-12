@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PracticeProject.Data;
-using PracticeProject.Interfaces;
-using PracticeProject.Reposiory;
+using PracticeProject.Interface;
+using PracticeProject.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +36,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Course}/{action=Index}/{id?}");
+
+
 
 app.Run();

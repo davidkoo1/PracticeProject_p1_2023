@@ -1,6 +1,6 @@
 ﻿using PracticeProject.Models;
 
-namespace PracticeProject.Interfaces
+namespace PracticeProject.Interface
 {
     public interface ICourseRepository
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PracticeProject.Data;
-using PracticeProject.Interfaces;
+using PracticeProject.Interface;
 using PracticeProject.Models;
 
-namespace PracticeProject.Reposiory
+namespace PracticeProject.Repository
 {
     public class CourseRepository : ICourseRepository
     {
@@ -25,10 +25,7 @@ namespace PracticeProject.Reposiory
 
         public async Task<IList<Course>> GetAllCourse() => await _dataContext.Courses.ToListAsync();
 
-        public Task<Course> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Course> GetByIdAsync(int id) => await _dataContext.Courses.FirstOrDefaultAsync(x => x.Id == id);
 
         public Task<Course> GetByIdAsyncNoTraking(int id)
         {

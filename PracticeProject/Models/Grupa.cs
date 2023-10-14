@@ -8,6 +8,6 @@ namespace PracticeProject.Models
         public string Code { get; set; }
         public string FullName { get; set; }
 
-        public virtual IEnumerable<CourseGrupa> courseGrupas { get; set; }
+        public virtual IList<CourseGrupa> courseGrupas { get; set; }
     }
 }

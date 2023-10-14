@@ -1,20 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PracticeProject.Data;
+using PracticeProject.Interface;
 
 namespace PracticeProject.Controllers
 {
     public class LessonController : Controller
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly ILessonRepository _lessonRepository;
 
-        public LessonController(ApplicationDbContext applicationDbContext)
+        public LessonController(ILessonRepository lessonRepository)
         {
-            _applicationDbContext = applicationDbContext;
+            _lessonRepository = lessonRepository;
         }
-        public IActionResult Index(int courseId, int lessonNumber)
+        public async Task<IActionResult> Index(int courseId, int lessonNumber)
         {
-            var lesson = _applicationDbContext.Lessons.FirstOrDefault(x => x.IdCourse == courseId && x.OrderNumber == lessonNumber);
-            return View(lesson);
+                                                                                                          //for me(tommorow): 
+            var lesson = await _lessonRepository.GetByCourseAndOrderNumberAsync(courseId, lessonNumber); //1 - big name(course) - norm view, 2 - fix visible info button(js - 1)
+            if (lesson != null)
+                return View(lesson);
+
+            return NotFound();
         }
     }
 }

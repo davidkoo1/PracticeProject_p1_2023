@@ -87,3 +87,8 @@ R:\the best уроки от лучшего человека\ASP\PracticeProject\
 R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject\obj\Debug\net6.0\PracticeProject.csproj.CopyComplete
+R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll

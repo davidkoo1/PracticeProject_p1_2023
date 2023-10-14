@@ -1,0 +1,32 @@
+﻿@model IList<Lesson>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h4>Уроки</h4>
+<ul>
+    @foreach (var lesson in Model.OrderBy(x => x.OrderNumber))
+    {
+        <li><a href="@Url.Action("Index", "Lesson", new {courseId = lesson.Course.Id, lessonNumber = lesson.OrderNumber})">Topic @lesson.OrderNumber : @lesson.Name</a></li>
+    }
+</ul>
+
+<script>
+    // Получаем все кнопки "Показать уроки"
+    const toggleButtons = document.querySelectorAll(".toggle-button");
+
+    toggleButtons.forEach((button) => {
+        const lessonList = button.nextElementSibling; // Получаем следующий элемент, который содержит список уроков
+        lessonList.style.display = "block"; // Устанавливаем начальное значение как "block"
+
+        button.addEventListener("click", () => {
+            // Переключаем видимость списка уроков
+            if (lessonList.style.display === "block") {
+                lessonList.style.display = "none";
+            } else {
+                lessonList.style.display = "block";
+            }
+        });
+    });
+</script>

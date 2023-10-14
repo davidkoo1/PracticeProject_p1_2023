@@ -1,24 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PracticeProject.Models
 {
-    [PrimaryKey("Id")]
     public class Lesson
     {
+        [Key]
         public int Id { get; set; }
         public int OrderNumber { get; set; }
         public string Name { get; set; }
-        public bool IsTextWork { get; set; }
-        public bool IsLabWork { get; set; }
-        public bool IsHomeWork { get; set; }
-
         public bool IsOpen { get; set; }
 
-        [ForeignKey("Course")]
-        public int IdCourse { get; set; }
 
         public virtual Course Course { get; set; }
-
+        public virtual IList<HomeWork>? HomeWork { get; set; }
+        public virtual IList<TextWork>? TextWork { get; set; }
+        public virtual IList<LabWork>? LabWork { get; set; }
     }
 }

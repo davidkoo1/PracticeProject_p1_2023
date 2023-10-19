@@ -16,8 +16,24 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = R:\the best уроки от лучшего человека\ASP\PracticeProject\PracticeProject
 build_property._RazorSourceGeneratorDebug = 
 
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Course/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Course/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/HomeWork/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVdvcmtcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/LabWork/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGFiV29ya1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Lesson/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVzc29uXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Lesson/Index.cshtml]
@@ -28,8 +44,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Shared/_Courses.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db3Vyc2VzLmNzaHRtbA==
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Shared/_CreateCourse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DcmVhdGVDb3Vyc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Shared/_CreateHomework.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DcmVhdGVIb21ld29yay5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Shared/_CreateLabWork.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DcmVhdGVMYWJXb3JrLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Shared/_CreateLesson.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DcmVhdGVMZXNzb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Shared/_CreateText.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DcmVhdGVUZXh0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Shared/_HomeWork.cshtml]
@@ -50,6 +82,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/TextWork/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGV4dFdvcmtcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [R:/the best уроки от лучшего человека/ASP/PracticeProject/PracticeProject/Views/_ViewImports.cshtml]

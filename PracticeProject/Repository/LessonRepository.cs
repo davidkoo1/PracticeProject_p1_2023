@@ -15,39 +15,35 @@ namespace PracticeProject.Repository
         }
         public bool Add(Lesson lesson)
         {
-            throw new NotImplementedException();
+            _dataContext.Add(lesson);
+            return Save();
         }
 
         public bool Delete(Lesson lesson)
         {
-            throw new NotImplementedException();
+            _dataContext.Remove(lesson);
+            return Save();
         }
 
-        public Task<IList<Lesson>> GetAllLessons()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IList<Lesson>> GetAllLessons() => await _dataContext.Lessons.ToListAsync();
 
         public async Task<Lesson> GetByCourseAndOrderNumberAsync(int courseId, int lessonNumber) => await _dataContext.Lessons.FirstOrDefaultAsync(x => x.Course.Id == courseId && x.OrderNumber == lessonNumber);
 
-        public Task<Lesson> GetByIdAsync(int id)
+        public Course GetCourseByIdAsync(int id) => _dataContext.Courses.FirstOrDefault(x => x.Id == id);
+        public async Task<Lesson> GetByIdAsyncNoTraking(int id) => await _dataContext.Lessons.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+        public int GetLastLessonNumber(int id)
         {
-            throw new NotImplementedException();
+            var course = _dataContext.Courses.FirstOrDefault(x => x.Id == id);
+            return course.Lessons.Count > 0 ? course.Lessons.Max(x => x.OrderNumber) + 1 : course.Lessons.Count + 1;
         }
 
-        public Task<Lesson> GetByIdAsyncNoTraking(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Save()
-        {
-            throw new NotImplementedException();
-        }
+        public bool Save() => _dataContext.SaveChanges() > 0 ? true : false;
 
         public bool Update(Lesson lesson)
         {
-            throw new NotImplementedException();
+            _dataContext.Update(lesson);
+            return Save();
         }
     }
 }

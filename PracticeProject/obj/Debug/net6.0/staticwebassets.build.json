@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XQdQlIiA52LFT0vDuqrZ8s9z7zRLe7kSEqjVAG6LK1E=",
+  "Hash": "pzMVLQbHNXuWzmLvfwSq9L/w8hEwO9Wn1kMLck5Rs2o=",
   "Source": "PracticeProject",
   "BasePath": "_content/PracticeProject",
   "Mode": "Default",
@@ -68,12 +68,12 @@
       "OriginalItemSpec": "wwwroot\\css\\home.css"
     },
     {
-      "Identity": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\lesson.css",
+      "Identity": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\lessone.css",
       "SourceId": "PracticeProject",
       "SourceType": "Discovered",
       "ContentRoot": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\",
       "BasePath": "_content/PracticeProject",
-      "RelativePath": "css/lesson.css",
+      "RelativePath": "css/lessone.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -82,7 +82,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\lesson.css"
+      "OriginalItemSpec": "wwwroot\\css\\lessone.css"
     },
     {
       "Identity": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\site.css",

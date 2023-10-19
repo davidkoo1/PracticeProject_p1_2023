@@ -169,8 +169,8 @@ namespace PracticeProject.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsOpen")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsOpen")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -10,6 +10,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ILessonRepository, LessonRepository>();
+builder.Services.AddScoped<ITextRepository, TextRepository>();
+builder.Services.AddScoped<IHomeworkRepository, HomeworkRepository>();
+builder.Services.AddScoped<ILaboratoryRepository, LaboratoryRepository>();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

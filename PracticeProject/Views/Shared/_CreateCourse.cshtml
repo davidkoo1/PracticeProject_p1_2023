@@ -1,0 +1,71 @@
+﻿@using PracticeProject.Data.Enum;
+@using PracticeProject.ViewModels;
+@model CreateCourseViewModel
+@{
+}
+
+
+
+<div class="form-group">
+    <label asp-for="Name">Course Name</label>
+    <input asp-for="Name" required>
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Image">ImageFile</label>
+    <input asp-for="Image" type="file">
+</div>
+<div class="form-group">
+    <label asp-for="IsOpen">Course status</label>
+    @{
+        var statusValues = Enum.GetValues(typeof(CourseStatus)).Cast<CourseStatus>().ToList();
+        statusValues.Reverse();
+    }
+
+    <select asp-for="IsOpen">
+        @*asp-items="@Html.GetEnumSelectList<CourseStatus>()"*@
+        @foreach (var status in statusValues)
+        {
+            <option value="@status">@status</option>
+        }
+    </select>
+
+    <span asp-validation-for="IsOpen" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <p>
+        Grups <span id="fold"></span>
+        <div id="list">
+            <div class="checkbox-list">
+                @foreach (var grup in ViewBag.Grups)
+                {
+                    <label class="custom-checkbox">
+                        <input type="checkbox" name="selectedGrups" value="@grup.Code" class="custom-control-input">
+                        <span class="custom-control-label">@grup.Code</span>
+                    </label>
+                    <br />
+                }
+            </div>
+        </div>
+        @Html.ValidationMessageFor(model => model.CourseGrupas, "", new { @class = "text-danger" })
+    </p>
+</div>
+
+<script>
+    var list = document.getElementById("list");
+    var fold = document.getElementById("fold");
+
+    var open = function () {
+        fold.innerHTML = '▼';
+        list.style.display = 'block';
+        fold.onclick = close;
+    };
+    var close = function () {
+        fold.innerHTML = '◀';
+        list.style.display = 'none';
+        fold.onclick = open;
+    };
+
+    close();
+</script>

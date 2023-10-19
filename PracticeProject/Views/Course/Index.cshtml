@@ -18,17 +18,31 @@
 <body>
     <main>
         <section class="courses-container">
+            <div class="course">
+            <a style="background-color:forestgreen;" href="@Url.Action("Create", "Course")">
+                + Добавить курс
+            </a>
+            </div>
             @foreach (var course in Model)
             {
                 <div class="course">
                     <h3>@course.Name</h3>
                     @foreach (var grupa in course.courseGrupas)
                     {
-                        <span><p>@grupa.Grupa.Code</p></span>
+                        <p>@grupa.Grupa.Code</p>
                     }
-                    <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = 1})">
-                        Перейти
-                    </a>
+                    @if (course.Lessons.Any())
+                    {
+                        <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = 1})">
+                            Перейти
+                        </a>
+                    }
+                    else
+                    {
+                        <a style="background-color:forestgreen;"href="@Url.Action("Create", "Lesson", new {courseId = course.Id})">
+                            + Добавить первый урок
+                        </a>
+                    }
                 </div>
             }
         </section>

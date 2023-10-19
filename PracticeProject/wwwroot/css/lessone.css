@@ -1,3 +1,4 @@
+
 #course-details {
     padding: 20px;
     display: grid;
@@ -38,7 +39,19 @@
     margin-top: 5px;
 }
 
+.work-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 10px; /* Добавьте отступ между кнопками */
+}
 
+    .work-button:hover {
+        background-color: #0056b3; /* Измените цвет при наведении */
+    }
+/*
 .work-button {
     text-decoration: none;
     display: inline-block;
@@ -65,11 +78,19 @@
         color: white;
         transform: translateY(-7px);
     }
+    */
+
+
 
 .courseInfo {
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     padding: 10px;
-    height: 500px; /* Установите желаемую высоту */
+    min-height: 500px; /* Установите желаемую высоту */
+    min-width: 95%;
+    max-width: 95%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
     .courseInfo ul {
@@ -95,10 +116,20 @@
                     text-decoration: underline;
                 }
 
+
+
+
 .courseSelected {
+    max-width: 240px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 10px;
     text-align: center;
 }
+    .courseSelected h3 {
+        word-wrap: break-word;
+    }
 
 img {
     max-width: 100%;
@@ -120,5 +151,15 @@ img {
 
     #course-details ul li {
         margin-bottom: 5px;
+    }
+    .courseSelected {
+        /*max-width: 90%;  На мобильных устройствах максимальная ширина контейнера */
+        margin: 0 auto; /* Выравнивание по центру */
+    }
+
+    .courseInfo {
+        min-width: 95%;
+        max-width: 95%;
+        margin: 0 auto;
     }
 }

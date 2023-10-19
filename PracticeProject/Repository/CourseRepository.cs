@@ -15,31 +15,29 @@ namespace PracticeProject.Repository
         }
         public bool Add(Course course)
         {
-            throw new NotImplementedException();
+            _dataContext.Add(course);
+            return Save();
         }
 
         public bool Delete(Course course)
         {
-            throw new NotImplementedException();
+            _dataContext.Remove(course);
+            return Save();
         }
 
         public async Task<IList<Course>> GetAllCourse() => await _dataContext.Courses.ToListAsync();
 
+        public IList<Grupa> GetAllGrups() => _dataContext.Grupas.ToList();
         public async Task<Course> GetByIdAsync(int id) => await _dataContext.Courses.FirstOrDefaultAsync(x => x.Id == id);
 
-        public Task<Course> GetByIdAsyncNoTraking(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Course> GetByIdAsyncNoTraking(int id) => await _dataContext.Courses.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-        public bool Save()
-        {
-            throw new NotImplementedException();
-        }
+        public bool Save() => _dataContext.SaveChanges() > 0 ? true : false;
 
         public bool Update(Course course)
         {
-            throw new NotImplementedException();
+            _dataContext.Update(course);
+            return Save();
         }
     }
 }

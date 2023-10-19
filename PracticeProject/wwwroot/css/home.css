@@ -1,7 +1,7 @@
 .courses-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-direction: column; /* Располагаем курсы в колонке */
+    align-items: center; /* Выравниваем по центру по горизонтали */
     padding: 20px;
 }
 
@@ -9,19 +9,52 @@
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
-    width: calc(33.33% - 20px); /* 3 курса в ряд с отступами */
-    box-sizing: border-box; /* Учитываем padding и border в расчетах */
+    max-width: 75%;
+    min-width: 75%;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+    transition: transform 0.2s, box-shadow 0.2s; /* Добавляем анимацию масштабирования и тени */
 }
+
+    .course:hover {
+        transform: scale(1.05); /* Увеличиваем размер при наведении */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Увеличиваем тень при наведении */
+    }
+
+.group-container {
+    display: flex; /* Располагаем группы внутри контейнера в ряд */
+    gap: 10px; /* Добавляем небольшой отступ между группами */
+    text-align: center; /* Центрируем текст внутри групп */
+}
+
+
+
+/*
+.course {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: calc(33.33% - 20px); /* 3 курса в ряд с отступами 
+    box-sizing: border-box; /* Учитываем padding и border в расчетах 
+    text-align: center;
+}*/
 
     .course h3 {
         font-size: 18px;
         margin: 10px 0;
+        max-width: 100%; /* Добавьте это свойство */
+        white-space: nowrap; /* Это предотвращает перенос текста на новую строку */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Добавьте многоточие, если текст не помещается в заданной ширине */
     }
 
-    .course p {
-        color: #666;
-    }
+
+.course p {
+    color: #666;
+    display: inline-block; /* Отображаем текст в одну строку */
+    text-align: center; /* Центрируем текст по горизонтали */
+}
+
 
     .course a {
         display: block;
@@ -41,6 +74,6 @@
 @media screen and (max-width: 768px) {
     /* Устанавливаем ширину 100% для курсов на мобильных экранах */
     .course {
-        width: 100%;
+        width: 120%;
     }
 }

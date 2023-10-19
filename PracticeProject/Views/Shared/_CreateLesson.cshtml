@@ -1,0 +1,16 @@
+﻿@using PracticeProject.ViewModels;
+@model CreateLessonViewModel
+
+<input type="hidden" asp-for="courseId" />
+<div class="form-group">
+    <label asp-for="Name">Lesson Name</label>
+    <input asp-for="Name" required>
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="OrderNumber">OrderNumber</label>
+    <input asp-for="OrderNumber" required>
+    <span asp-validation-for="OrderNumber" class="text-danger"></span>
+</div>
+
+

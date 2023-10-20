@@ -2,6 +2,7 @@
 using PracticeProject.Data;
 using PracticeProject.Interface;
 using PracticeProject.Models;
+using System.Text.RegularExpressions;
 
 namespace PracticeProject.Repository
 {
@@ -15,6 +16,14 @@ namespace PracticeProject.Repository
         }
         public bool Add(TextWork text)
         {
+            string[] patternsToReplace = { @"\[ж\]", @"\[/ж\]", @"\[к\]", @"\[/к\]", "\n" };
+            string[] replacements = { "<b>", "</b>", "<i>", "</i>", "<br/>" };
+
+            for (int i = 0; i < patternsToReplace.Length; i++)
+            {
+                text.Task = Regex.Replace(text.Task, patternsToReplace[i], replacements[i]);
+            }
+
             _dataContext.Add(text);
             return Save();
         }

@@ -5,12 +5,50 @@
 
 <div class="form-group">
     <label asp-for="Task">Task</label>
-    <textarea class="form-control" style="margin-top: 20px;" rows="5" placeholder="Add your text..." name="Task"></textarea>
+    <div>
+        <button type="button" onclick="insertTag('[ж][/ж]')">ж</button>
+        <button type="button" onclick="insertTag('[к][/к]')">к</button>
+        <button type="button" onclick="insertTag('[ч][/ч]')">ч</button>
+    </div>
+    <textarea class="form-control" style="margin-top: 20px;" rows="5" placeholder="Add your text..." name="Task" id="taskTextarea"></textarea>
     <span asp-validation-for="Task" class="text-danger"></span>
 </div>
+
+
 <div class="form-group">
     <label asp-for="OrderNumber">OrderNumber</label>
     <input asp-for="OrderNumber" required>
     <span asp-validation-for="OrderNumber" class="text-danger"></span>
 </div>
+
+<script>
+    function insertTag(tag) {
+        var textarea = document.getElementById('taskTextarea');
+        var text = textarea.value;
+        var selectionStart = textarea.selectionStart;
+        var selectionEnd = textarea.selectionEnd;
+
+        var selectedText = text.substring(selectionStart, selectionEnd);
+
+        // Проверьте, если нет выделенного текста, то просто вставьте теги в текущую позицию курсора
+        if (selectionStart === selectionEnd) {
+            var newText = text.substring(0, selectionStart) + tag + text.substring(selectionEnd);
+            textarea.value = newText;
+            // Установите курсор после вставленных тегов
+            textarea.selectionStart = selectionStart + tag.length;
+            textarea.selectionEnd = selectionStart + tag.length;
+        } else {
+            // Вставьте теги вокруг выделенного текста
+            var newText = text.substring(0, selectionStart) + tag + selectedText + tag + text.substring(selectionEnd);
+            textarea.value = newText;
+            // Установите курсор после закрывающего тега
+            textarea.selectionStart = selectionEnd + tag.length * 2;
+            textarea.selectionEnd = textarea.selectionStart;
+        }
+    }
+
+</script>
+
+
+
 

@@ -11,10 +11,12 @@ namespace PracticeProject.Controllers
     {
 
         private readonly ICourseRepository _courseRepository;
+        private readonly IPhotoService _photoservice;
 
-        public CourseController(ICourseRepository courseRepository)
+        public CourseController(ICourseRepository courseRepository, IPhotoService photoService)
         {
             _courseRepository = courseRepository;
+            _photoservice = photoService;
         }
 
         public async Task<IActionResult> Index()
@@ -34,44 +36,39 @@ namespace PracticeProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCourseViewModel courseVM, string[] selectedGrups)
         {
-            /* if(!ModelState.IsValid)
-             {
-                 return View(course);
-             }
-            */
-            courseVM.CourseGrupas = new List<CourseGrupa>();
-            for (int i = 0; i < selectedGrups.Length; i++)
+            if (ModelState.IsValid)
             {
-                CourseGrupa tmp = new CourseGrupa()
+                var result = await _photoservice.AddPhotoAsync(courseVM.Image);
+
+
+                courseVM.CourseGrupas = new List<CourseGrupa>();
+                for (int i = 0; i < selectedGrups.Length; i++)
                 {
-                    IdGrupa = selectedGrups[i]
+                    CourseGrupa tmp = new CourseGrupa()
+                    {
+                        IdGrupa = selectedGrups[i]
+                    };
+                    courseVM.CourseGrupas.Add(tmp);
+                }
+
+                Course course = new Course()
+                {
+                    Name = courseVM.Name,
+                    IsOpen = courseVM.IsOpen,
+                    Image = result.Url.ToString(),
+                    courseGrupas = courseVM.CourseGrupas
                 };
-                courseVM.CourseGrupas.Add(tmp);
+                
+                _courseRepository.Add(course);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Photo upload failed");
             }
 
-            Course course = new Course()
-            {
-                Name = courseVM.Name,
-                IsOpen = courseVM.IsOpen,
-                Image = "Defaultsrc",
-                courseGrupas = courseVM.CourseGrupas
-            };
-/*            if (courseVM.LessonVM == null)
-                course.IsOpen = CourseStatus.Close;
-            else
-                course.Lessons = new List<Lesson>()
-                {
-                    new Lesson()
-                    {
-                        Name = courseVM.LessonVM.Name,
-                        OrderNumber = 1,
-                        IsOpen = true,
-                        Course = course
-                    }
-                };*/
+            return View(courseVM);
 
-            _courseRepository.Add(course);
-            return RedirectToAction("Index");
         }
 
     }

@@ -6,7 +6,7 @@ namespace PracticeProject.ViewModels
     public class CreateCourseViewModel
     {
         public string Name { get; set; }
-        public IFormFile? Image { get; set; }
+        public IFormFile Image { get; set; }
         public CourseStatus IsOpen { get; set; }
 
        // public CreateLessonViewModel? LessonVM { get; set; }

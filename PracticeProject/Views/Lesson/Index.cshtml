@@ -18,7 +18,7 @@
         <section id="course-details">
 
             <div class="courseSelected">
-                <img src="https://yt3.googleusercontent.com/ytc/AGIKgqMlhKipVX399nsGQB7Gu8tkzNYx0-nBx2fLUML5dQ=s900-c-k-c0x00ffffff-no-rj" alt="Курс 1">
+                <img src="@Model.Course.Image" alt="Курс 1">
                 <h3>@Model.Course.Name</h3>
                 <a class="add" href="@Url.Action("Create", "Lesson", new {courseId = Model.Course.Id})">
                     New Lesson

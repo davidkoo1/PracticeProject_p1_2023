@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using PracticeProject.Data;
+using PracticeProject.Helpers;
 using PracticeProject.Interface;
 using PracticeProject.Repository;
+using PracticeProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,9 @@ builder.Services.AddScoped<ILessonRepository, LessonRepository>();
 builder.Services.AddScoped<ITextRepository, TextRepository>();
 builder.Services.AddScoped<IHomeworkRepository, HomeworkRepository>();
 builder.Services.AddScoped<ILaboratoryRepository, LaboratoryRepository>();
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

@@ -30,7 +30,7 @@ namespace PracticeProject.Repository
         public async Task<Lesson> GetByCourseAndOrderNumberAsync(int courseId, int lessonNumber) => await _dataContext.Lessons.FirstOrDefaultAsync(x => x.Course.Id == courseId && x.OrderNumber == lessonNumber);
 
         public Course GetCourseByIdAsync(int id) => _dataContext.Courses.FirstOrDefault(x => x.Id == id);
-        public async Task<Lesson> GetByIdAsyncNoTraking(int id) => await _dataContext.Lessons.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<Lesson> GetByIdAsyncNoTracking(int id) => await _dataContext.Lessons.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         public int GetLastLessonNumber(int id)
         {

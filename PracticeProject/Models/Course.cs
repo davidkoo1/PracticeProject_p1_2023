@@ -10,7 +10,7 @@ namespace PracticeProject.Models
         public CourseStatus IsOpen { get; set; }
 
         public virtual User User { get; set; }
-        public virtual IList<Lesson> Lessons { get; set; }
-        public virtual IList<CourseGrupa> courseGrupas { get; set; }
+        public virtual List<Lesson> Lessons { get; set; }
+        public virtual List<CourseGrupa> courseGrupas { get; set; }
     }
 }

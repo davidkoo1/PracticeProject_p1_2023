@@ -1,0 +1,154 @@
+﻿@using PracticeProject.Data.Enum;
+@using PracticeProject.ViewModels;
+@model EditCourseViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        color: #ff6666;
+        font-size: 36px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    /* Stylish form container */
+    .form-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Stylish form input fields */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    label {
+        color: #666;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    /* Stylish form submit button */
+    .submit-button {
+        background-color: #ff6666;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .submit-button:hover {
+            background-color: #ff9999;
+        }
+
+    .file-input {
+        display: none;
+    }
+
+    .file-input-label {
+        background-color: #ff6666;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        display: inline-block;
+    }
+
+        .file-input-label:hover {
+            background-color: #ff9999;
+        }
+
+    /* Stylish file name display */
+    .file-name {
+        color: #666;
+        margin-top: 5px;
+    }
+</style>
+
+<h1>Edit Course</h1>
+<div class="form-container">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Name">Course Name</label>
+            <input asp-for="Name" required>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Image">ImageFile</label>
+            <input asp-for="Image" type="file">
+        </div>
+        <div class="form-group">
+            <label asp-for="IsOpen">Course status</label>
+            @{
+                var statusValues = Enum.GetValues(typeof(CourseStatus)).Cast<CourseStatus>().ToList();
+                statusValues.Reverse();
+            }
+
+            <select asp-for="IsOpen">
+                @*asp-items="@Html.GetEnumSelectList<CourseStatus>()"*@
+                @foreach (var status in statusValues)
+                {
+                    <option value="@status">@status</option>
+                }
+            </select>
+
+            <span asp-validation-for="IsOpen" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <p>
+                Grups <span id="fold"></span>
+                <div id="list">
+                    <div class="checkbox-list">
+                        @foreach (var grup in ViewBag.Grups)
+                        {
+                            var isChecked = Model.CourseGrupas.Any(cg => cg.IdGrupa == grup.Code); // Проверка, выбрана ли группа
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="selectedGrups" value="@grup.Code" class="custom-control-input" @if (isChecked)
+                                {
+                                    <text>checked</text>
+                                }>
+                                <span class="custom-control-label">@grup.Code</span>
+                            </label>
+                            <br />
+                        }
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.CourseGrupas, "", new { @class = "text-danger" })
+            </p>
+        </div>
+
+
+        <button type="submit" class="submit-button">Edit</button>
+    </form>
+</div>

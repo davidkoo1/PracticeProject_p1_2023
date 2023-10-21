@@ -30,7 +30,7 @@ namespace PracticeProject.Repository
         public IList<Grupa> GetAllGrups() => _dataContext.Grupas.ToList();
         public async Task<Course> GetByIdAsync(int id) => await _dataContext.Courses.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<Course> GetByIdAsyncNoTraking(int id) => await _dataContext.Courses.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<Course> GetByIdAsyncNoTracking(int id) => await _dataContext.Courses.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         public bool Save() => _dataContext.SaveChanges() > 0 ? true : false;
 

@@ -4,7 +4,32 @@
 *@
 @{
 }
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+@foreach (var item in Model)
+{
+    <input type="radio" name="radio" id="radio@item.OrderNumber">
+    <label for="radio@item.OrderNumber">Homework @item.OrderNumber</label>
+    <br />
+}
+
 @foreach(var item in Model)
 {
-    @Html.Raw(item.Task)
+    <div id="text@item.OrderNumber" class="hidden">@Html.Raw(item.Task)</div>
 }
+
+<script>
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    const texts = document.querySelectorAll('div[id^="text"]');
+
+    radioButtons.forEach((radio, index) => {
+        radio.addEventListener('change', () => {
+            texts.forEach((text, i) => {
+                text.style.display = i === index && radio.checked ? 'block' : 'none';
+            });
+        });
+    });
+</script>

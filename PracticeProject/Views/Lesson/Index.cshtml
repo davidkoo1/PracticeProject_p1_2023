@@ -50,15 +50,15 @@
                         @*
                         @if (Model.TextWork.Any())
                         {
-                            <li><button id="button1" class="work-button">Text Work</button></li>
+                        <li><button id="button1" class="work-button">Text Work</button></li>
                         }
                         @if (Model.HomeWork.Any())
                         {
-                            <li><button id="button2" class="work-button">Home Work</button></li>
+                        <li><button id="button2" class="work-button">Home Work</button></li>
                         }
                         @if (Model.LabWork.Any())
                         {
-                            <li><button id="button3" class="work-button">Lab Work</button></li>
+                        <li><button id="button3" class="work-button">Lab Work</button></li>
                         }
                         *@
                         <li><button id="button0" class="work-button">Text Work</button></li>
@@ -66,36 +66,36 @@
                         <li><button id="button2" class="work-button">Lab Work</button></li>
                     </ul>
 
-                    <hr style="margin: 0 auto;" width=90% noshade /><br/>
+                    <hr style="margin: 0 auto;" width=90% noshade /><br />
                 </div>
 
                 <div id="div1" style="display: none;">
-                    @{
-                        await Html.RenderPartialAsync("_TextWork", Model.TextWork);
-                    }
-
                     <a class="add" href="@Url.Action("Create", "TextWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
                         Add part
                     </a>
+                    @{
+                        await Html.RenderPartialAsync("_TextWork", Model.TextWork);
+                    }
                 </div>
                 <div id="div2" style="display: none;">
-                    @{
-                        await Html.RenderPartialAsync("_HomeWork", Model.HomeWork);
-                    }
                     <a class="add" href="@Url.Action("Create", "HomeWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
                         Add Task
                     </a>
+                    @{
+                        await Html.RenderPartialAsync("_HomeWork", Model.HomeWork);
+                    }
                 </div>
                 <div id="div3" style="display: none;">
-                    @{
-                        await Html.RenderPartialAsync("_LabWork", Model.LabWork);
-                    }
-                    @if(Model.LabWork.Count == 0)
+                    @if (Model.LabWork.Count == 0)
                     {
                         <a class="add" href="@Url.Action("Create", "LabWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
                             Add Task
                         </a>
                     }
+                    @{
+                        await Html.RenderPartialAsync("_LabWork", Model.LabWork);
+                    }
+
                 </div>
             </div>
 

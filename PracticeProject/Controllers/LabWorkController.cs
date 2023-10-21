@@ -43,5 +43,8 @@ namespace PracticeProject.Controllers
             _laboratoryRepository.Add(labWork);
             return RedirectToAction("Index", "Lesson", new { courseId = lesson.Course.Id, lessonNumber = lesson.OrderNumber });
         }
+
+
+
     }
 }

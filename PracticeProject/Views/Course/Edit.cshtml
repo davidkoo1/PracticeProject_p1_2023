@@ -97,6 +97,7 @@
 <h1>Edit Course</h1>
 <div class="form-container">
     <form method="post" asp-action="Edit" enctype="multipart/form-data">
+        <input type="hidden" asp-for="CourseGrupas" />
         <div class="form-group">
             <label asp-for="Name">Course Name</label>
             <input asp-for="Name" required>

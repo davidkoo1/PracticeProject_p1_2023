@@ -4,6 +4,7 @@ using PracticeProject.Data;
 using PracticeProject.Interface;
 using PracticeProject.Models;
 using PracticeProject.Repository;
+using PracticeProject.Services;
 using PracticeProject.ViewModels;
 
 namespace PracticeProject.Controllers
@@ -30,7 +31,6 @@ namespace PracticeProject.Controllers
         {
             CreateLessonViewModel lessonVM = new CreateLessonViewModel()
             {
-                IsOpen = true,
                 OrderNumber = _lessonRepository.GetLastLessonNumber(courseId)
             };
 
@@ -49,11 +49,64 @@ namespace PracticeProject.Controllers
             {
                 Name = lessonVM.Name,
                 OrderNumber = lessonVM.OrderNumber,
-                IsOpen = true,
+                IsOpen = lessonVM.IsOpen,
                 Course = _lessonRepository.GetCourseByIdAsync(lessonVM.courseId)
             };
             _lessonRepository.Add(lesson);
             return RedirectToAction("Index", new { courseId = lesson.Course.Id, lessonNumber = lesson.OrderNumber });
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+
+
+            var lesson = await _lessonRepository.GetByIdAsync(id);
+
+
+            if (lesson == null)
+                return View("Error");
+            var lessonVM = new EditLessonViewModel
+            {
+                Name = lesson.Name,
+                OrderNumber = lesson.OrderNumber,
+                IsOpen = lesson.IsOpen,
+                courseId = lesson.Course.Id
+            };
+
+            return View(lessonVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditLessonViewModel lessonVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit lesson");
+                return View("Edit", lessonVM);
+            }
+
+
+
+            var lessonEdit = await _lessonRepository.GetByIdAsyncNoTracking(id);
+            if (lessonEdit != null)
+            {
+
+                var lesson = new Lesson
+                {
+                    Id = id,
+                    Name = lessonVM.Name,
+                    IsOpen = lessonVM.IsOpen,
+                    OrderNumber = lessonVM.OrderNumber,
+                    Course = _lessonRepository.GetCourseByIdAsync(lessonVM.courseId)
+                };
+
+                _lessonRepository.Update(lesson);
+
+                return RedirectToAction("Index", new { courseId = lessonVM.courseId, lessonNumber = lessonVM.OrderNumber });
+            }
+
+            return View(lessonVM);
+
         }
     }
 }

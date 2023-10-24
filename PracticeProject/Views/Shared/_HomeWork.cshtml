@@ -12,7 +12,8 @@
 @foreach (var item in Model)
 {
     <input type="radio" name="radio" id="radio@item.OrderNumber">
-    <label for="radio@item.OrderNumber">Homework @item.OrderNumber</label>
+    <label for="radio@item.OrderNumber">Homework @item.OrderNumber</label> 
+    <a href="@Url.Action("Edit", "HomeWork", new {id = item.Id})">Edit</a>
     <br />
 }
 

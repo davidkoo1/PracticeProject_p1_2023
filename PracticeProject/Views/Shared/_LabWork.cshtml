@@ -4,7 +4,10 @@
 *@
 @{
 }
+
 @foreach(var item in Model)
 {
+    <a href="@Url.Action("Edit", "LabWork", new {id = item.Id})">Edit</a>
+    <br/>
     @Html.Raw(item.Task)
 }

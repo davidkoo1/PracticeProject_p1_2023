@@ -51,6 +51,9 @@
     .work-button:hover {
         background-color: #0056b3; /* Измените цвет при наведении */
     }
+
+
+
 /*
 .work-button {
     text-decoration: none;
@@ -127,6 +130,7 @@
     padding: 10px;
     text-align: center;
 }
+
     .courseSelected h3 {
         word-wrap: break-word;
     }
@@ -152,6 +156,7 @@ img {
     #course-details ul li {
         margin-bottom: 5px;
     }
+
     .courseSelected {
         /*max-width: 90%;  На мобильных устройствах максимальная ширина контейнера */
         margin: 0 auto; /* Выравнивание по центру */

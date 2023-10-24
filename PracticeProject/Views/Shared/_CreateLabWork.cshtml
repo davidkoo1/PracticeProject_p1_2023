@@ -1,11 +1,12 @@
 ﻿@using PracticeProject.ViewModels;
-@model CreateLabWorkViewModel
+@model LabWorkViewModel
 
 <input type="hidden" asp-for="lessonId" />
+<input type="hidden" asp-for="Id" />
 
 <div class="form-group">
     <label asp-for="Task">Task</label>
-    <textarea class="form-control" style="margin-top: 20px;" rows="15" placeholder="Add your tasks..." name="Task"></textarea>
+    <textarea class="form-control" style="margin-top: 20px;" rows="15" placeholder="Add your tasks..." name="Task">@Model.Task</textarea>
     <span asp-validation-for="Task" class="text-danger"></span>
 </div>
 

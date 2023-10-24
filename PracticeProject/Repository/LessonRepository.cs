@@ -45,5 +45,7 @@ namespace PracticeProject.Repository
             _dataContext.Update(lesson);
             return Save();
         }
+
+        public async Task<Lesson> GetByIdAsync(int id) => await _dataContext.Lessons.FirstOrDefaultAsync(x => x.Id == id);
     }
 }

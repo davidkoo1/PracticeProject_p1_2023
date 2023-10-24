@@ -5,6 +5,7 @@ namespace PracticeProject.Interface
     public interface ICourseRepository
     {
         Task<IList<Course>> GetAllCourse();
+        Task<Grupa> GetGrupaById(string id);
         IList<Grupa> GetAllGrups();
         Task<Course> GetByIdAsync(int id);
         Task<Course> GetByIdAsyncNoTracking(int id);

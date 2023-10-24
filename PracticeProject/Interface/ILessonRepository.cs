@@ -8,6 +8,7 @@ namespace PracticeProject.Interface
         Course GetCourseByIdAsync(int id);
         Task<Lesson> GetByCourseAndOrderNumberAsync(int courseId, int lessonNumber);
         Task<Lesson> GetByIdAsyncNoTracking(int id);
+        Task<Lesson> GetByIdAsync(int id);
 
         int GetLastLessonNumber(int id);
 

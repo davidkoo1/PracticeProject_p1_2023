@@ -95,7 +95,7 @@
 
 
 <div class="form-container">
-    <form method="post" asp-action="Create" enctype="multipart/form-data" class="dropzone" id="videoDropzone">
+    <form method="post" asp-action="Create">
         @{
             await Html.RenderPartialAsync("_CreateLesson", Model);
         }

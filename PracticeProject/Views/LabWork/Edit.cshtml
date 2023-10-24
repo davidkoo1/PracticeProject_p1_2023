@@ -1,7 +1,7 @@
 ﻿@using PracticeProject.ViewModels;
 @model LabWorkViewModel
 @{
-    ViewData["Title"] = "Laboratory work for lesson";
+    ViewData["Title"] = "Edit Labwork";
 }
 
 <style>
@@ -94,10 +94,10 @@
 
 
 <div class="form-container">
-    <form method="post" asp-action="Create" enctype="multipart/form-data">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
         @{
             await Html.RenderPartialAsync("_CreateLabWork", Model);
         }
-        <button type="submit" class="submit-button">Create</button>
+        <button type="submit" class="submit-button">Edit</button>
     </form>
 </div>

@@ -1,8 +1,8 @@
 ﻿namespace PracticeProject.ViewModels
 {
-    public class CreateTextWorkViewModel
+    public class LabWorkViewModel
     {
-        public int OrderNumber { get; set; }
+        public int Id { get; set; }
         public string Task { get; set; }
         public int lessonId { get; set; }
     }

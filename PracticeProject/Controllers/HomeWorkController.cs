@@ -2,6 +2,7 @@
 using PracticeProject.Data;
 using PracticeProject.Interface;
 using PracticeProject.Models;
+using PracticeProject.Repository;
 using PracticeProject.ViewModels;
 
 namespace PracticeProject.Controllers
@@ -17,7 +18,7 @@ namespace PracticeProject.Controllers
         public IActionResult Create(int courseId, int lessonNumber)
         {
             var lesson = _homeworkRepository.GetBycourseIdAndlessonIdAsync(courseId, lessonNumber);
-            CreateHomeWorkViewModel homeWorkVM = new CreateHomeWorkViewModel()
+            HomeWorkViewModel homeWorkVM = new HomeWorkViewModel()
             {
                 //OrderNumber = _dbContext.Lessons.FirstOrDefault(x => x.Course.Id == courseId && x.OrderNumber == lessonNumber).Id,
                 lessonId = lesson.Id,
@@ -29,22 +30,76 @@ namespace PracticeProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateHomeWorkViewModel homeWorkVM)
+        public async Task<IActionResult> Create(HomeWorkViewModel homeWorkVM)
         {
 
             if (!ModelState.IsValid)
             {
                 return View(homeWorkVM);
             }
-            var lesson = _homeworkRepository.GetById(homeWorkVM.lessonId);
+            var lesson = _homeworkRepository.GetLessonById(homeWorkVM.lessonId);
             HomeWork homeWork = new HomeWork()
             {
                 OrderNumber = homeWorkVM.OrderNumber,
                 Task = homeWorkVM.Task,
-                Lesson = _homeworkRepository.GetById(homeWorkVM.lessonId)
+                Lesson = _homeworkRepository.GetLessonById(homeWorkVM.lessonId)
             };
             _homeworkRepository.Add(homeWork);
             return RedirectToAction("Index", "Lesson", new { courseId = lesson.Course.Id, lessonNumber = lesson.OrderNumber });
+        }
+
+
+
+        public async Task<IActionResult> Edit(int id)
+        {
+
+
+            var homeWork = await _homeworkRepository.GetByIdAsync(id);
+
+
+            if (homeWork == null)
+                return View("Error");
+            var homeWorkVM = new HomeWorkViewModel
+            {
+                Id = id,
+                Task = homeWork.Task,
+                OrderNumber = homeWork.OrderNumber,
+                lessonId = homeWork.Lesson.Id
+            };
+
+            return View(homeWorkVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, HomeWorkViewModel homeWorkVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit text");
+                return View("Edit", homeWorkVM);
+            }
+
+
+
+            var homeworkEdit = await _homeworkRepository.GetByIdAsyncNoTracking(id);
+            if (homeworkEdit != null)
+            {
+
+                var homework = new HomeWork
+                {
+                    Id = id,
+                    Task = homeWorkVM.Task,
+                    OrderNumber = homeWorkVM.OrderNumber,
+                    Lesson = _homeworkRepository.GetLessonById(homeWorkVM.lessonId)
+                };
+
+                _homeworkRepository.Update(homework);
+
+                return RedirectToAction("Index", "Lesson", new { courseId = homework.Lesson.Course.Id, lessonNumber = homework.Lesson.OrderNumber });
+            }
+
+            return View(homeWorkVM);
+
         }
     }
 }

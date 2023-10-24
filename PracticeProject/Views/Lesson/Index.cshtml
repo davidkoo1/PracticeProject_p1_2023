@@ -1,4 +1,5 @@
-﻿@model Lesson
+﻿@using PracticeProject.Data.Enum;
+@model Lesson
 
 @{
     ViewData["Title"] = Model.Course.Name;
@@ -10,15 +11,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/lessone.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/lessones.css">
 
 </head>
 <body>
     <main>
+       
         <section id="course-details">
 
             <div class="courseSelected">
-                <img src="@Model.Course.Image" alt="Курс 1">
+                <img src="@Model.Course.Image">
                 <h3>@Model.Course.Name</h3>
                 <a class="add" href="@Url.Action("Create", "Lesson", new {courseId = Model.Course.Id})">
                     New Lesson
@@ -30,14 +33,26 @@
                     <ul>
                         @foreach (var lesson in Model.Course.Lessons.OrderBy(x => x.OrderNumber))
                         {
-                            if (lesson.OrderNumber != Model.OrderNumber)
+                            <li>
+                                <a href="@Url.Action("Edit", "Lesson", new {id = lesson.Id})"><i class="fa fa-pencil"></i></a>
+                                <a href="@Url.Action("Index", "Lesson", new {courseId = Model.Course.Id, lessonNumber = lesson.OrderNumber})">
+                                    Topic @lesson.OrderNumber : @lesson.Name
+                                </a>
+                            </li>
+                            //Для всех смертных
+                            /*if (lesson.OrderNumber != Model.OrderNumber && lesson.IsOpen == CourseStatus.Open)
                             {
                                 <li><a href="@Url.Action("Index", "Lesson", new {courseId = Model.Course.Id, lessonNumber = lesson.OrderNumber})">Topic @lesson.OrderNumber : @lesson.Name</a></li>
                             }
-                            else
+                            else if (lesson.OrderNumber == Model.OrderNumber)
                             {
                                 <li>Topic @lesson.OrderNumber : @lesson.Name</li>
                             }
+                            else
+                            {
+                                <li style="color: orangered;">Topic @lesson.OrderNumber : @lesson.Name</li>
+                            }
+                            */
                         }
                     </ul>
                 </div>
@@ -45,7 +60,14 @@
 
             <div class="courseInfo">
                 <div style="text-align: center;">
-                    <h3>Topic @Model.OrderNumber | @Model.Name</h3>
+                    @if (Model.IsOpen == CourseStatus.Open)
+                    {
+                        <h3><u style="color: forestgreen;">Topic @Model.OrderNumber | @Model.Name</u></h3>
+                    }
+                    else
+                    {
+                        <h3><u style="color: orangered;">Topic @Model.OrderNumber | @Model.Name</u></h3>
+                    }
                     <ul>
                         @*
                         @if (Model.TextWork.Any())

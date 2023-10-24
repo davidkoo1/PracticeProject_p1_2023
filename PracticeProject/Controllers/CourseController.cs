@@ -115,7 +115,8 @@ namespace PracticeProject.Controllers
                 {
                     try
                     {
-                        await _photoservice.DeletePhotoAsync(courseEdit.Image);
+                        if (courseEdit.Image != null)
+                            await _photoservice.DeletePhotoAsync(courseEdit.Image);
                     }
                     catch (Exception)
                     {
@@ -129,26 +130,24 @@ namespace PracticeProject.Controllers
                 else
                     imgUrl = courseEdit.Image;
 
-                //эту фигню надо нормально сделать
-                /*
-                courseVM.CourseGrupas = new List<CourseGrupa>();
-                for (int i = 0; i < selectedGrups.Length; i++)
+
+
+                foreach (var newItem in selectedGrups)
                 {
-                    CourseGrupa tmp = new CourseGrupa()
+                    CourseGrupa newCourseGrupa = new CourseGrupa()
                     {
-                        IdGrupa = selectedGrups[i],
-                        IdCourse = id
+                        IdCourse = id,
+                        IdGrupa = newItem,
                     };
-                    courseVM.CourseGrupas.Add(tmp);
+                    courseVM.CourseGrupas.Add(newCourseGrupa);
                 }
-                */
                 var course = new Course
                 {
                     Id = id,
                     Name = courseVM.Name,
                     IsOpen = courseVM.IsOpen,
                     Image = imgUrl,
-                    courseGrupas = courseVM.CourseGrupas,
+                    courseGrupas = courseVM.CourseGrupas
                 };
 
                 _courseRepository.Update(course);

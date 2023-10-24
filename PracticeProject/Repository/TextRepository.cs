@@ -16,8 +16,8 @@ namespace PracticeProject.Repository
         }
         public bool Add(TextWork text)
         {
-            string[] patternsToReplace = { @"\[ж\]", @"\[/ж\]", @"\[к\]", @"\[/к\]", "\n" };
-            string[] replacements = { "<b>", "</b>", "<i>", "</i>", "<br/>" };
+            string[] patternsToReplace = { @"\[ж\]", @"\[/ж\]", @"\[к\]", @"\[/к\]", "\n", @"\[ч\]", @"\[/ч\]" };
+            string[] replacements = { "<b>", "</b>", "<i>", "</i>", "<br/>", "<u>", "</u>" };
 
             for (int i = 0; i < patternsToReplace.Length; i++)
             {
@@ -36,8 +36,9 @@ namespace PracticeProject.Repository
 
         public Lesson GetBycourseIdAndlessonIdAsync(int courseId, int lessonNumber) => _dataContext.Lessons.FirstOrDefault(x => x.Course.Id == courseId && x.OrderNumber == lessonNumber);
 
-        public Lesson GetById(int id) => _dataContext.Lessons.FirstOrDefault(x => x.Id == id);
+        public Lesson GetLessonById(int id) => _dataContext.Lessons.FirstOrDefault(x => x.Id == id);
 
+        public async Task<TextWork> GetByIdAsync(int id) => await _dataContext.TextWorks.FirstOrDefaultAsync(x => x.Id == id);
         public int GetLastTextWorkOrderNumberByLessonId(int lessonid)
         {
             var lesson = _dataContext.Lessons.FirstOrDefault(x => x.Id == lessonid);
@@ -48,8 +49,17 @@ namespace PracticeProject.Repository
 
         public bool Update(TextWork text)
         {
+            string[] patternsToReplace = { @"\[ж\]", @"\[/ж\]", @"\[к\]", @"\[/к\]", "\n", @"\[ч\]", @"\[/ч\]" };
+            string[] replacements = { "<b>", "</b>", "<i>", "</i>", "<br/>", "<u>", "</u>" };
+
+            for (int i = 0; i < patternsToReplace.Length; i++)
+            {
+                text.Task = Regex.Replace(text.Task, patternsToReplace[i], replacements[i]);
+            }
             _dataContext.Update(text);
             return Save();
         }
+
+        public async Task<TextWork> GetByIdAsyncNoTracking(int id) => await _dataContext.TextWorks.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 }

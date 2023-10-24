@@ -1,7 +1,10 @@
-﻿@using PracticeProject.ViewModels;
-@model LabWorkViewModel
+﻿@using PracticeProject.Data.Enum;
+@using PracticeProject.ViewModels;
+@model EditLessonViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
 @{
-    ViewData["Title"] = "Laboratory work for lesson";
 }
 
 <style>
@@ -58,7 +61,6 @@
         font-size: 18px;
         cursor: pointer;
         transition: background-color 0.2s ease-in-out;
-        width: 100%;
     }
 
         .submit-button:hover {
@@ -92,12 +94,42 @@
     }
 </style>
 
-
+<h1>Edit Lesson</h1>
 <div class="form-container">
-    <form method="post" asp-action="Create" enctype="multipart/form-data">
-        @{
-            await Html.RenderPartialAsync("_CreateLabWork", Model);
-        }
-        <button type="submit" class="submit-button">Create</button>
+    <form method="post" asp-action="Edit">
+
+        <input type="hidden" asp-for="courseId" />
+        <div class="form-group">
+            <label asp-for="Name">Lesson Name</label>
+            <input asp-for="Name" required>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="OrderNumber">OrderNumber</label>
+            <input asp-for="OrderNumber" required>
+            <span asp-validation-for="OrderNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="IsOpen">Course status</label>
+            @{
+                var statusValues = Enum.GetValues(typeof(CourseStatus)).Cast<CourseStatus>().ToList();
+                statusValues.Reverse();
+            }
+
+            <select asp-for="IsOpen">
+                @*asp-items="@Html.GetEnumSelectList<CourseStatus>()"*@
+                @foreach (var status in statusValues)
+                {
+                    <option value="@status">@status</option>
+                }
+            </select>
+
+            <span asp-validation-for="IsOpen" class="text-danger"></span>
+        </div>
+
+
+
+
+        <button type="submit" class="submit-button">Edit</button>
     </form>
 </div>

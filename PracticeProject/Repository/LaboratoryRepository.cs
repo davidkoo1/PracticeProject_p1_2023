@@ -1,4 +1,5 @@
-﻿using PracticeProject.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PracticeProject.Data;
 using PracticeProject.Interface;
 using PracticeProject.Models;
 
@@ -26,8 +27,11 @@ namespace PracticeProject.Repository
 
         public Lesson GetBycourseIdAndlessonIdAsync(int courseId, int lessonNumber) => _dataContext.Lessons.FirstOrDefault(x => x.Course.Id == courseId && x.OrderNumber == lessonNumber);
 
-        public Lesson GetById(int id) => _dataContext.Lessons.FirstOrDefault(x => x.Id == id);
+        public Lesson GetLessonById(int id) => _dataContext.Lessons.FirstOrDefault(x => x.Id == id);
 
+        public async Task<LabWork> GetByIdAsync(int id) => await _dataContext.LabWorks.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<LabWork> GetByIdAsyncNoTracking(int id) => await _dataContext.LabWorks.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         public bool Save() => _dataContext.SaveChanges() > 0 ? true : false;
 

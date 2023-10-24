@@ -1,7 +1,8 @@
 ﻿@using PracticeProject.ViewModels;
-@model CreateTextWorkViewModel
+@model TextWorkViewModel
 
 <input type="hidden" asp-for="lessonId" />
+<input type="hidden" asp-for="Id" />
 
 <div class="form-group">
     <label asp-for="Task">Task</label>
@@ -10,7 +11,7 @@
         <button type="button" onclick="insertTag('[к][/к]')">к</button>
         <button type="button" onclick="insertTag('[ч][/ч]')">ч</button>
     </div>
-    <textarea class="form-control" style="margin-top: 20px;" rows="5" placeholder="Add your text..." name="Task" id="taskTextarea"></textarea>
+    <textarea class="form-control" style="margin-top: 20px;" rows="5" placeholder="Add your text..." name="Task" id="taskTextarea">@Model.Task</textarea>
     <span asp-validation-for="Task" class="text-danger"></span>
 </div>
 

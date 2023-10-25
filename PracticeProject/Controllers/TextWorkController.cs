@@ -25,7 +25,7 @@ namespace PracticeProject.Controllers
                 OrderNumber = _textRepository.GetLastTextWorkOrderNumberByLessonId(lesson.Id)
 
             };
-            
+
             return View(textWorkVM);
         }
 
@@ -98,6 +98,19 @@ namespace PracticeProject.Controllers
             }
 
             return View(textVM);
+
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var textDetails = await _textRepository.GetByIdAsync(id);
+            var lesson = textDetails.Lesson;
+            if (textDetails == null)
+                return View("Error");
+            _textRepository.Delete(textDetails);
+
+
+            return RedirectToAction("Index", "Lesson", new { courseId = lesson.Course.Id, lessonNumber = lesson.OrderNumber });
 
         }
     }

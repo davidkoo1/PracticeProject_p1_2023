@@ -7,7 +7,7 @@
 <style>
     .add {
         text-align: center;
-        background-color: #ff6666;
+        background-color: #006400; /* Темно-зеленый цвет */
         color: #fff;
         padding: 10px 20px;
         border: none;
@@ -18,14 +18,15 @@
         display: block;
         text-decoration: none;
         margin: 5px auto;
-        width: 50%;
+        width: 90%;
     }
 
         .add:hover {
-            background-color: #ff9999;
+            background-color: #00cc00; /* Светло-зеленый цвет при наведении */
             color: #fff;
             text-decoration: none;
         }
+
 
     .workText {
         position: relative;
@@ -83,7 +84,7 @@
 
     <div class="workText">
         <div class="pencil-icon">
-            <a href="@Url.Action("Edit", "TextWork", new {id = item.Id})"><i class="fa fa-pencil"></i></a>
+            <a href="@Url.Action("Edit", "TextWork", new {id = item.Id})"><i class="fa fa-pencil" style="color: blueviolet;"></i></a>
         </div>
         <div class="sel">@Html.Raw(item.Task)</div>
         <div class="popup">@item.OrderNumber</div>

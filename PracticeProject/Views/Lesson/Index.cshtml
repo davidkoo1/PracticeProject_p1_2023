@@ -34,7 +34,7 @@
                         @foreach (var lesson in Model.Course.Lessons.OrderBy(x => x.OrderNumber))
                         {
                             <li>
-                                <a href="@Url.Action("Edit", "Lesson", new {id = lesson.Id})"><i class="fa fa-pencil"></i></a>
+                                <a href="@Url.Action("Edit", "Lesson", new {id = lesson.Id})"><i class="fa fa-pencil" style="color: blueviolet;"></i></a>
                                 <a href="@Url.Action("Index", "Lesson", new {courseId = Model.Course.Id, lessonNumber = lesson.OrderNumber})">
                                     Topic @lesson.OrderNumber : @lesson.Name
                                 </a>
@@ -62,11 +62,12 @@
                 <div style="text-align: center;">
                     @if (Model.IsOpen == CourseStatus.Open)
                     {
-                        <h3><u style="color: forestgreen;">Topic @Model.OrderNumber | @Model.Name</u></h3>
+                        <h3><u style="text-decoration-color: #00cc00; text-decoration-style: solid; text-decoration-thickness: 2px; color: inherit;">Topic @Model.OrderNumber | @Model.Name</u></h3>
+
                     }
                     else
                     {
-                        <h3><u style="color: orangered;">Topic @Model.OrderNumber | @Model.Name</u></h3>
+                        <h3><u style="text-decoration-color: orangered; text-decoration-style: solid; text-decoration-thickness: 2px; color: inherit;">Topic @Model.OrderNumber | @Model.Name</u></h3>
                     }
                     <ul>
                         @*

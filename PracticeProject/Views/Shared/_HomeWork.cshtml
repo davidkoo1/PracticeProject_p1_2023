@@ -11,15 +11,18 @@
 </style>
 @foreach (var item in Model)
 {
-    <input type="radio" name="radio" id="radio@item.OrderNumber">
-    <label for="radio@item.OrderNumber">Homework @item.OrderNumber</label> 
+    <input type="radio" name="radio" id="radio @item.OrderNumber">
+    <label for="radio @item.OrderNumber">Homework @item.OrderNumber</label> 
     <a href="@Url.Action("Edit", "HomeWork", new {id = item.Id})">Edit</a>
+    <br />
     <br />
 }
 
 @foreach(var item in Model)
 {
-    <div id="text@item.OrderNumber" class="hidden">@Html.Raw(item.Task)</div>
+    <br/>
+    <div id="text @item.OrderNumber" class="hidden">@Html.Raw(item.Task)</div>
+    <br/>
 }
 
 <script>

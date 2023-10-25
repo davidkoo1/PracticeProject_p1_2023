@@ -94,6 +94,17 @@ namespace PracticeProject.Controllers
             return View(labWorkVM);
 
         }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var labworkDetails = await _laboratoryRepository.GetByIdAsync(id);
+            var lesson = labworkDetails.Lesson;
+            if (labworkDetails == null)
+                return View("Error");
+            _laboratoryRepository.Delete(labworkDetails);
 
+
+            return RedirectToAction("Index", "Lesson", new { courseId = lesson.Course.Id, lessonNumber = lesson.OrderNumber });
+
+        }
     }
 }

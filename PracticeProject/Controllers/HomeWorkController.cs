@@ -101,5 +101,18 @@ namespace PracticeProject.Controllers
             return View(homeWorkVM);
 
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var homeworkDetails = await _homeworkRepository.GetByIdAsync(id);
+            var lesson = homeworkDetails.Lesson;
+            if (homeworkDetails == null)
+                return View("Error");
+            _homeworkRepository.Delete(homeworkDetails);
+
+
+            return RedirectToAction("Index", "Lesson", new { courseId = lesson.Course.Id, lessonNumber = lesson.OrderNumber });
+
+        }
     }
 }

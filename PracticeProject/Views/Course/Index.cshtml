@@ -46,6 +46,9 @@
                     <a href="@Url.Action("Edit", "Course", new {id = course.Id})">
                         Изменить
                     </a>
+                    <a style="background-color: red;" href="@Url.Action("Delete", "Course", new {id = course.Id})">
+                        Удалить
+                    </a>
                 </div>
             }
         </section>

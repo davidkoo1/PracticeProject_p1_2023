@@ -1,0 +1,78 @@
+﻿@using PracticeProject.Data.Enum;
+@model Course
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    /* Stylish form container */
+    .form-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Stylish form input fields */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    /* Stylish form submit button */
+
+</style>
+
+
+<h1>Are you sure you want to delete this Course?</h1>
+<div class="form-container">
+    <form method="post" asp-action="Delete" enctype="multipart/form-data">
+        <div class="form-group">
+            <h1>@Model.Name</h1>
+        </div>
+        <div class="form-group" style="text-align: center;">
+            <img src="@Model.Image" width="240" style="margin: 0 auto; display: block;" />
+        </div>
+
+
+        <div class="form-group">
+            @if (Model.IsOpen == CourseStatus.Open)
+            {
+                <h1>Status:<u style="text-decoration-color: forestgreen; text-decoration-style: solid; text-decoration-thickness: 2px; color: inherit;">@Model.IsOpen</u></h1>
+            }
+            else
+            {
+                <h1>Status:<u style="text-decoration-color: orangered; text-decoration-style: solid; text-decoration-thickness: 2px; color: inherit;">@Model.IsOpen</u></h1>
+            }
+        </div>
+        <div class="form-group">
+            <h5>Grups:</h5>
+            @foreach(var grups in Model.courseGrupas)
+            {
+                <p>@grups.IdGrupa</p>
+            }
+        </div>
+    </form>
+    <div class="form-group">
+        <form action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Delete" class="btn btn-danger float-right mt-3" style="width: 100%;" />
+        </form>
+    </div>
+</div>

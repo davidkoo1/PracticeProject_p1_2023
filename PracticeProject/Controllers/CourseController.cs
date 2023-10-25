@@ -168,5 +168,15 @@ namespace PracticeProject.Controllers
             return View(courseDetails);
         }
 
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            var courseDetails = await _courseRepository.GetByIdAsync(id);
+            if (courseDetails == null)
+                return View("Error");
+
+            _courseRepository.Delete(courseDetails);
+            return RedirectToAction("Index");
+        }
     }
 }

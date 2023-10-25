@@ -29,7 +29,7 @@ namespace PracticeProject.Controllers
 
         public IActionResult Create(int courseId)
         {
-            CreateLessonViewModel lessonVM = new CreateLessonViewModel()
+            LessonViewModel lessonVM = new LessonViewModel()
             {
                 OrderNumber = _lessonRepository.GetLastLessonNumber(courseId)
             };
@@ -38,7 +38,7 @@ namespace PracticeProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateLessonViewModel lessonVM)
+        public async Task<IActionResult> Create(LessonViewModel lessonVM)
         {
 
             if (!ModelState.IsValid)
@@ -65,8 +65,9 @@ namespace PracticeProject.Controllers
 
             if (lesson == null)
                 return View("Error");
-            var lessonVM = new EditLessonViewModel
+            var lessonVM = new LessonViewModel
             {
+                Id = id,
                 Name = lesson.Name,
                 OrderNumber = lesson.OrderNumber,
                 IsOpen = lesson.IsOpen,
@@ -77,7 +78,7 @@ namespace PracticeProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditLessonViewModel lessonVM)
+        public async Task<IActionResult> Edit(int id, LessonViewModel lessonVM)
         {
             if (!ModelState.IsValid)
             {
@@ -108,5 +109,22 @@ namespace PracticeProject.Controllers
             return View(lessonVM);
 
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var lessonDetails = await _lessonRepository.GetByIdAsync(id);
+            int courseId = lessonDetails.Course.Id;
+            if (lessonDetails == null)
+                return View("Error");
+            _lessonRepository.Delete(lessonDetails);
+
+            //Ищем первое попавшееся занятие с курса, если не нулл то идем к нему, если нулл то на общую стр с курсами 
+            var firstInLesson = await _lessonRepository.FindFirst(courseId);
+            if (firstInLesson != null)
+                return RedirectToAction("Index", new { courseId = firstInLesson.Course.Id, lessonNumber = firstInLesson.OrderNumber });
+            else
+                return RedirectToAction("Index", "Course");
+        }
+
     }
 }

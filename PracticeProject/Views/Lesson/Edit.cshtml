@@ -1,6 +1,6 @@
 ﻿@using PracticeProject.Data.Enum;
 @using PracticeProject.ViewModels;
-@model EditLessonViewModel
+@model LessonViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -129,9 +129,10 @@
             <span asp-validation-for="IsOpen" class="text-danger"></span>
         </div>
 
-
-
-
         <button type="submit" class="submit-button">Edit</button>
     </form>
+    <a type="button" class="btn btn-danger" style="width: 100%; margin-top: 10px;" href="@Url.Action("Delete", "Lesson", new { id = Model.Id})">
+        <i class="fa fa-trash"></i> Delete
+    </a>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

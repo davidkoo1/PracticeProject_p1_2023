@@ -9,7 +9,7 @@ namespace PracticeProject.Models
         public string? Image { get; set; }
         public CourseStatus IsOpen { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
         public virtual List<Lesson> Lessons { get; set; }
         public virtual List<CourseGrupa> courseGrupas { get; set; }
     }

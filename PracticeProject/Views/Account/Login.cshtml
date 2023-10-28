@@ -1,0 +1,103 @@
+﻿@using PracticeProject.ViewModels;
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!-- Подключение стилей -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    /* Ваши пользовательские стили здесь */
+    body {
+        background-color: wheat;
+    }
+    .login-container {
+        background-color: #f5f5f5;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        margin-top: 30px;
+    }
+
+    .login-header {
+        color: #333;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .center-line {
+        width: 80%;
+        margin: 10px auto;
+        border: none;
+        height: 2px;
+        background-color: #007bff;
+    }
+
+    .control-label {
+        color: #333;
+    }
+
+</style>
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4 login-container">
+            <div class="login-header text-center">
+                <h1>Welcome Back!</h1>
+            </div>
+
+            <!-- Вывод сообщения об ошибке (если есть) -->
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    <strong>Oops!</strong> @TempData["Error"]
+                </div>
+            }
+
+            <form id="login-form" asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Поле Email или имя пользователя -->
+                <div class="form-group">
+                    <label asp-for="ConfirmData" class="control-label">Email Address or Username</label>
+                    <input asp-for="ConfirmData" class="form-control" placeholder="Email Address or Username">
+                    <span asp-validation-for="ConfirmData" class="text-danger"></span>
+                </div>
+
+                <!-- Поле пароля -->
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Password</label>
+                    <input type="password" asp-for="Password" class="form-control" id="inputPassword" placeholder="Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <!-- Кнопка "Log in" -->
+                <div class="form-group text-center">
+                    <button class="btn btn-primary btn-login" style="width: 100%;" type="submit">Log in</button>
+                </div>
+
+                <!-- Горизонтальная линия -->
+                <hr class="center-line">
+
+                <!-- Кнопка "Register" -->
+                <div class="form-group">
+                    <button class="btn btn-secondary btn-block" asp-area="" asp-controller="Account" asp-action="Register">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,153 @@
+﻿@using PracticeProject.ViewModels;
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Sign up";
+}
+
+<!-- Подключение стилей -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    /* Ваши пользовательские стили здесь */
+
+    .anime-form-group {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: dimgray;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Anime-themed label */
+    .anime-label {
+        color: #ff6666;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    /* Anime-themed select */
+    .anime-select {
+        flex: 1;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #f8f8f8;
+        transition: border-color 0.3s;
+    }
+
+        .anime-select:focus {
+            border-color: #ff6666;
+        }
+
+    body {
+        background-color: wheat; /* Светлый фон */
+    }
+
+    .register-container {
+        background-color: #f5f5f5; /* Фон контейнера */
+        border-radius: 8px; /* Уменьшил радиус скругления границ */
+        padding: 20px; /* Увеличил отступы внутри контейнера */
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Мягкая тень */
+        margin-top: 30px;
+    }
+
+    .register-header {
+        color: #333;
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+        .btn-success:hover {
+            background-color: #1d7d32;
+        }
+
+    .control-label {
+        color: #333;
+    }
+
+    .btn-outline-secondary {
+        background-color: #007bff;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-outline-secondary:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Oops!</strong> @TempData["Error"]
+    </div>
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 register-container">
+            <h1 class="register-header">Sign up</h1>
+
+            <form asp-action="Register">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">Email Address</label>
+                    <input type="email" asp-for="Email" class="form-control" placeholder="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Surname" class="control-label">Surname</label>
+                    <input asp-for="Surname" class="form-control" placeholder="Surname" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                @{
+                    // Создайте SelectList, используя "Code" для отображения и передачи значения
+                    var grupsSelectList = new SelectList(ViewBag.Grups, "Code", "Code");
+                }
+
+                <div class="form-group anime-form-group">
+                    <label class="anime-label">Select Group</label>
+                    @Html.DropDownListFor(model => model.GrupaId, grupsSelectList, new { @class = "form-control anime-select", id = "grupaDropdown" })
+                    @Html.ValidationMessageFor(model => model.GrupaId, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Password</label>
+                    <input type="password" asp-for="Password" class="form-control" placeholder="Example: Password@1234?" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="control-label">Confirm Password</label>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-center">
+                    <button class="btn btn-success" type="submit">Sign up</button>
+                    <a class="btn btn-outline-secondary text-white" asp-controller="Account" asp-action="Login">Log in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

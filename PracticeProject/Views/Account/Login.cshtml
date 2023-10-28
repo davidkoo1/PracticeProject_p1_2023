@@ -73,9 +73,9 @@
 
                 <!-- Поле Email или имя пользователя -->
                 <div class="form-group">
-                    <label asp-for="ConfirmData" class="control-label">Email Address or Username</label>
-                    <input asp-for="ConfirmData" class="form-control" placeholder="Email Address or Username">
-                    <span asp-validation-for="ConfirmData" class="text-danger"></span>
+                    <label asp-for="EmailAddress" class="control-label">Email Address</label>
+                    <input type="email" asp-for="EmailAddress" class="form-control" placeholder="Email Address">
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
                 </div>
 
                 <!-- Поле пароля -->

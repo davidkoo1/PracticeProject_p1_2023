@@ -4,9 +4,9 @@ namespace PracticeProject.ViewModels
 {
     public class LoginViewModel
     {
-        [Display(Name = "Email Address or username")]
-        [Required(ErrorMessage = "Email or username is required")]
-        public string ConfirmData { get; set; } //UserName, Email
+        [Display(Name = "Email Address")]
+        [Required(ErrorMessage = "Email is required")]
+        public string EmailAddress { get; set; } //UserName, Email
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set;}

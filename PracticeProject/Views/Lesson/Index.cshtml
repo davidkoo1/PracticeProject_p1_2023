@@ -29,7 +29,7 @@
                 <button class="toggle-button">Показать уроки</button>
 
                 <div class="lesson-list">
-                    <h4>Уроки</h4>
+                    <h4>Lessons</h4>
                     <ul>
                         @foreach (var lesson in Model.Course.Lessons.OrderBy(x => x.OrderNumber))
                         {
@@ -120,48 +120,36 @@
                     }
 
                 </div>
+           
+            
             </div>
 
         </section>
     </main>
     <script>
-        // script.js
-
-        // Получаем все кнопки "Показать уроки"
+        // Toggle lesson list visibility
         const toggleButtons = document.querySelectorAll(".toggle-button");
-
         toggleButtons.forEach((button) => {
-            const lessonList = button.nextElementSibling; // Получаем следующий элемент, который содержит список уроков
-            lessonList.style.display = "block"; // Устанавливаем начальное значение как "block"
-
             button.addEventListener("click", () => {
-                // Переключаем видимость списка уроков
-                if (lessonList.style.display === "block") {
-                    lessonList.style.display = "none";
-                } else {
-                    lessonList.style.display = "block";
-                }
+                const lessonList = button.nextElementSibling;
+                lessonList.style.display = lessonList.style.display === "none" ? "block" : "none";
             });
         });
 
-
-
-        var buttons = document.querySelectorAll('button');
-        var divs = document.querySelectorAll('div[id^="div"]');
-
-        buttons.forEach(function (button, index) {
-            button.addEventListener('click', function () {
-                // Сначала скрываем все div
-                divs.forEach(function (div) {
+        // Handle work buttons
+        const workButtons = document.querySelectorAll(".work-button");
+        const workDivs = document.querySelectorAll('div[id^="div"]');
+        workButtons.forEach((button, index) => {
+            button.addEventListener("click", () => {
+                workDivs.forEach((div) => {
                     div.style.display = 'none';
                 });
-
-                // Затем отображаем только соответствующий div
-                divs[index - 2].style.display = 'block';
+                workDivs[index].style.display = 'block';
             });
         });
-
-
     </script>
+
+
+
 </body>
 </html>

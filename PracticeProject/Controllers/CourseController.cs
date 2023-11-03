@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PracticeProject.Data;
 using PracticeProject.Data.Enum;
 using PracticeProject.Interface;
@@ -19,21 +20,36 @@ namespace PracticeProject.Controllers
             _photoservice = photoService;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("student"))
+            {
+                var coursesUser = await _courseRepository.GetAllCourseByUserGrupa();
+                return View(coursesUser);
+            }
             var courses = await _courseRepository.GetAllCourse();
             return View(courses);
         }
 
+        [Authorize(Roles = "admin,Teacher")]
+        public async Task<IActionResult> MyCourses()
+        {
+            var coursesUser = await _courseRepository.GetAllCourseByUser();
+            return View(coursesUser);
+        }
+
+
+        [Authorize(Roles = "admin,Teacher")]
         public IActionResult Create()
         {
             var grups = _courseRepository.GetAllGrups();
             ViewBag.Grups = grups;
-
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Create(CreateCourseViewModel courseVM, string[] selectedGrups)
         {
             if (ModelState.IsValid)
@@ -56,11 +72,12 @@ namespace PracticeProject.Controllers
                     Name = courseVM.Name,
                     IsOpen = courseVM.IsOpen,
                     Image = result.Url.ToString(),
-                    courseGrupas = courseVM.CourseGrupas
+                    courseGrupas = courseVM.CourseGrupas,
+                    User = await _courseRepository.GetUser(User.GetUserId().ToString()) //Над исправить
                 };
-                
+
                 _courseRepository.Add(course);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index"); //После добавления/Изменения переход на MyCourses
             }
             else
             {
@@ -71,7 +88,7 @@ namespace PracticeProject.Controllers
 
         }
 
-
+        [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Edit(int id)
         {
 
@@ -95,6 +112,7 @@ namespace PracticeProject.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Edit(int id, EditCourseViewModel courseVM, string[] selectedGrups)
         {
             /*if (courseVM.CourseGrupas.Any())
@@ -159,7 +177,7 @@ namespace PracticeProject.Controllers
 
         }
 
-
+        [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Delete(int id)
         {
             var courseDetails = await _courseRepository.GetByIdAsync(id);

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PracticeProject.Data;
 using PracticeProject.Models;
 using PracticeProject.ViewModels;
-using System.Linq;
 
 namespace PracticeProject.Controllers
 {
@@ -21,6 +20,9 @@ namespace PracticeProject.Controllers
         //[HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Course");
+
             var response = new LoginViewModel();
             return View(response);
         }
@@ -28,17 +30,18 @@ namespace PracticeProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(loginVM);
 
-            var user = await _userManager.FindByEmailAsync(loginVM.EmailAddress);//_userManager.FindByEmailAsync(loginVM.ConfirmData) ?? await _userManager.FindByNameAsync(loginVM.ConfirmData);
-            if(user != null)
+            var user = await _userManager.FindByEmailAsync(loginVM.EmailAddress);
+            //_userManager.FindByEmailAsync(loginVM.ConfirmData) ?? await _userManager.FindByNameAsync(loginVM.ConfirmData);
+            if (user != null)
             {
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
-                if(passwordCheck)
+                if (passwordCheck)
                 {
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
-                    if(result.Succeeded) 
+                    if (result.Succeeded)
                     {
                         return RedirectToAction("Index", "Course");
                     }
@@ -54,8 +57,6 @@ namespace PracticeProject.Controllers
 
         public IActionResult Register()
         {
-
-            var excludedCodes = new List<string> { "Teachers", "Students", "admins" };
             var grups = _applicationDbContext.Grupas.Where(x => x.Code != "Teachers" && x.Code != "admins" && x.Code != "Students").ToList();
             ViewBag.Grups = grups;
 
@@ -75,8 +76,8 @@ namespace PracticeProject.Controllers
                 return View(registerVM);
             }
 
-            var user = await _userManager.FindByEmailAsync(registerVM.Email);   
-            if(user != null)
+            var user = await _userManager.FindByEmailAsync(registerVM.Email);
+            if (user != null)
             {
                 TempData["Error"] = "This email address is alraedy in use";
                 return View(registerVM);
@@ -89,7 +90,7 @@ namespace PracticeProject.Controllers
                 Email = registerVM.Email,
                 Name = registerVM.Name,
                 Surname = registerVM.Surname,
-                UserName = Guid.NewGuid().ToString(),
+                UserName = Guid.NewGuid().ToString(), //!!!!!!!!!!!????
                 GrupaId = registerVM.GrupaId
             };
 
@@ -110,6 +111,7 @@ namespace PracticeProject.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            
             return RedirectToAction("Login", "Account");
         }
 

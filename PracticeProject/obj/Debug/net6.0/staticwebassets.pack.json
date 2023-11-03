@@ -5,12 +5,16 @@
       "PackagePath": "staticwebassets\\PracticeProject.bundle.scp.css"
     },
     {
+      "Id": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\courses.css",
+      "PackagePath": "staticwebassets\\css\\courses.css"
+    },
+    {
       "Id": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\edits.css",
       "PackagePath": "staticwebassets\\css\\edits.css"
     },
     {
-      "Id": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\home.css",
-      "PackagePath": "staticwebassets\\css\\home.css"
+      "Id": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\headerR.css",
+      "PackagePath": "staticwebassets\\css\\headerR.css"
     },
     {
       "Id": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\lessones.css",

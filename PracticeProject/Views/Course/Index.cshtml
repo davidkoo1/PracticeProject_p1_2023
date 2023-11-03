@@ -7,7 +7,7 @@
     ViewData["Title"] = "Courses";
 }
 
-<link rel="stylesheet" href="~/css/home.css">
+<link rel="stylesheet" href="~/css/courses.css">
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -17,41 +17,14 @@
 </head>
 <body>
     <main>
-        <section class="courses-container">
-            <div class="course">
-            <a style="background-color:forestgreen;" href="@Url.Action("Create", "Course")">
-                + Добавить курс
-            </a>
-            </div>
-            @foreach (var course in Model)
-            {
-                <div class="course">
-                    <h3>@course.Name</h3>
-                    @foreach (var grupa in course.courseGrupas)
-                    {
-                        <p>@grupa.Grupa.Code</p>
-                    }
-                    @if (course.Lessons.Any())
-                    {
-                        <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = 1})">
-                            Перейти
-                        </a>
-                    }
-                    else
-                    {
-                        <a style="background-color:forestgreen;"href="@Url.Action("Create", "Lesson", new {courseId = course.Id})">
-                            + Добавить первый урок
-                        </a>
-                    }
-                    <a href="@Url.Action("Edit", "Course", new {id = course.Id})">
-                        Изменить
-                    </a>
-                    <a style="background-color: red;" href="@Url.Action("Delete", "Course", new {id = course.Id})">
-                        Удалить
-                    </a>
-                </div>
-            }
-        </section>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <section class="courses-container">
+                @{
+                    await Html.RenderPartialAsync("_Courses", Model);
+                }
+            </section>
+        }
     </main>
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4WmDMhidq3sbO7HjGPuw+U6feRXvAHg0XgOXLI2h0Jc=",
+  "Hash": "0mAXaxuTdL9zGiWVIn8Lk6X6bw84BpqEOuVKvXRwP+w=",
   "Source": "PracticeProject",
   "BasePath": "_content/PracticeProject",
   "Mode": "Default",
@@ -51,6 +51,23 @@
       "OriginalItemSpec": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\PracticeProject.bundle.scp.css"
     },
     {
+      "Identity": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\courses.css",
+      "SourceId": "PracticeProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\",
+      "BasePath": "_content/PracticeProject",
+      "RelativePath": "css/courses.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\courses.css"
+    },
+    {
       "Identity": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\edits.css",
       "SourceId": "PracticeProject",
       "SourceType": "Discovered",
@@ -68,12 +85,12 @@
       "OriginalItemSpec": "wwwroot\\css\\edits.css"
     },
     {
-      "Identity": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\home.css",
+      "Identity": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\headerR.css",
       "SourceId": "PracticeProject",
       "SourceType": "Discovered",
       "ContentRoot": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\",
       "BasePath": "_content/PracticeProject",
-      "RelativePath": "css/home.css",
+      "RelativePath": "css/headerR.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -82,7 +99,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\home.css"
+      "OriginalItemSpec": "wwwroot\\css\\headerR.css"
     },
     {
       "Identity": "R:\\the best уроки от лучшего человека\\ASP\\PracticeProject\\PracticeProject\\wwwroot\\css\\lessones.css",

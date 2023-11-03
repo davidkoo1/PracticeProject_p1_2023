@@ -1,0 +1,36 @@
+﻿@model IList<Course>
+
+
+@foreach (var course in Model)
+{
+    <div class="course">
+        <h3>@course.Name</h3>
+        @foreach (var grupa in course.courseGrupas)
+        {
+            <p>@grupa.Grupa.Code</p>
+        }
+        @if (course.Lessons.Any())
+        {
+            <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = 1})">
+                Start->
+            </a>
+        }
+        @if (course.User != null)
+        {
+            @if (course.User.Id == User.GetUserId() || User.IsInRole("admin"))
+            {
+                <a style="background-color:forestgreen;" href="@Url.Action("Create", "Lesson", new {courseId = course.Id})">
+                    + Add Lesson
+                </a>
+                <a href="@Url.Action("Edit", "Course", new {id = course.Id})">
+                    Edit Course
+                </a>
+                <a style="background-color: red;" href="@Url.Action("Delete", "Course", new {id = course.Id})">
+                    Delete Course
+                </a>
+            }
+
+        }
+        
+    </div>
+}

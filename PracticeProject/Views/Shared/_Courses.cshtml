@@ -1,4 +1,5 @@
-﻿@model IList<Course>
+﻿@using PracticeProject.Data.Enum;
+@model IList<Course>
 
 
 @foreach (var course in Model)
@@ -11,9 +12,22 @@
         }
         @if (course.Lessons.Any())
         {
-            <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = 1})">
-                Start->
-            </a>
+            if (course.Lessons.Count(x => x.IsOpen == CourseStatus.Open) > 0 && User.IsInRole("student"))
+            {
+                var lesson = course.Lessons.FirstOrDefault(x => x.IsOpen == CourseStatus.Open);
+                if (lesson != null)
+                {
+                    <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = lesson.OrderNumber})">
+                        Start-->
+                    </a>
+                }
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = 1})">
+                    Start-->
+                </a>
+            }
         }
         @if (course.User != null)
         {

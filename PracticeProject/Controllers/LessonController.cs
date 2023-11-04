@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PracticeProject.Data;
+using PracticeProject.Data.Enum;
 using PracticeProject.Interface;
 using PracticeProject.Models;
 using PracticeProject.Repository;
@@ -17,16 +20,27 @@ namespace PracticeProject.Controllers
         {
             _lessonRepository = lessonRepository;
         }
+
+        [Authorize]
         public async Task<IActionResult> Index(int courseId, int lessonNumber)
         {
             //Передаю максимальный номре(перехожу на ласт урок) если номера нет то статус -1 если -1то переход на стр с соданием                                                                          //for me(tommorow): 
-            var lesson = await _lessonRepository.GetByCourseAndOrderNumberAsync(courseId, lessonNumber); //1 - big name(course) - norm view, 2 - fix visible info button(js - 1)
+            var lesson = await _lessonRepository.GetByCourseAndOrderNumberAsync(courseId, lessonNumber);
             if (lesson != null)
-                return View(lesson);
+            {
+                if (lesson.IsOpen == CourseStatus.Close && User.IsInRole("admin") || lesson.Course.User.Id == User.GetUserId())
+                    return View(lesson);
+                else if (lesson.IsOpen == CourseStatus.Open)
+                    return View(lesson);
+
+                return Forbid();
+            }
+
 
             return NotFound();
         }
 
+        [Authorize(Roles = "admin,Teacher")]
         public IActionResult Create(int courseId)
         {
             LessonViewModel lessonVM = new LessonViewModel()
@@ -38,6 +52,7 @@ namespace PracticeProject.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Create(LessonViewModel lessonVM)
         {
 
@@ -56,6 +71,8 @@ namespace PracticeProject.Controllers
             return RedirectToAction("Index", new { courseId = lesson.Course.Id, lessonNumber = lesson.OrderNumber });
         }
 
+
+        [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Edit(int id)
         {
 
@@ -78,6 +95,7 @@ namespace PracticeProject.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Edit(int id, LessonViewModel lessonVM)
         {
             if (!ModelState.IsValid)
@@ -110,6 +128,8 @@ namespace PracticeProject.Controllers
 
         }
 
+
+        [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Delete(int id)
         {
             var lessonDetails = await _lessonRepository.GetByIdAsync(id);
@@ -123,7 +143,7 @@ namespace PracticeProject.Controllers
             if (firstInLesson != null)
                 return RedirectToAction("Index", new { courseId = firstInLesson.Course.Id, lessonNumber = firstInLesson.OrderNumber });
             else
-                return RedirectToAction("Index", "Course");
+                return RedirectToAction("MyCourses", "Course");
         }
 
     }

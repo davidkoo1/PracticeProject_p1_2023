@@ -17,15 +17,21 @@
 </head>
 <body>
     <main>
-       
+
         <section id="course-details">
 
             <div class="courseSelected">
                 <img src="@Model.Course.Image">
                 <h3>@Model.Course.Name</h3>
-                <a class="add" href="@Url.Action("Create", "Lesson", new {courseId = Model.Course.Id})">
-                    New Lesson
-                </a>
+                @if (Model.Course.User != null)
+                {
+                    @if (User.Identity.IsAuthenticated && !User.IsInRole("student") && Model.Course.User.Id == User.GetUserId())
+                    {
+                        <a class="add" href="@Url.Action("Create", "Lesson", new {courseId = Model.Course.Id})">
+                            + New Lesson
+                        </a>
+                    }
+                }
                 <button class="toggle-button">Показать уроки</button>
 
                 <div class="lesson-list">
@@ -34,25 +40,49 @@
                         @foreach (var lesson in Model.Course.Lessons.OrderBy(x => x.OrderNumber))
                         {
                             <li>
-                                <a href="@Url.Action("Edit", "Lesson", new {id = lesson.Id})"><i class="fa fa-pencil" style="color: blueviolet;"></i></a>
-                                <a href="@Url.Action("Index", "Lesson", new {courseId = Model.Course.Id, lessonNumber = lesson.OrderNumber})">
-                                    Topic @lesson.OrderNumber : @lesson.Name
-                                </a>
+
+                                @if (Model.Course.User != null)
+                                {
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        var isAdminOrCourseOwner = User.IsInRole("admin") || Model.Course.User.Id == User.GetUserId();
+
+                                        if (isAdminOrCourseOwner)
+                                        {
+                                            <a href="@Url.Action("Edit", "Lesson", new { id = lesson.Id })"><i class="fa fa-pencil" style="color: blueviolet;"></i></a>
+                                        }
+
+                                        if (lesson.OrderNumber == Model.OrderNumber)
+                                        {
+                                            <p>Topic @lesson.OrderNumber: @lesson.Name</p>
+                                        }
+                                        else
+                                        {
+                                            if (lesson.IsOpen == CourseStatus.Close && !isAdminOrCourseOwner)
+                                            {
+                                                <p style="color: orangered;">Topic @lesson.OrderNumber : @lesson.Name</p>
+                                            }
+                                            else if (User.IsInRole("student"))
+                                            {
+                                                <a href="@Url.Action("Index", "Lesson", new { courseId = Model.Course.Id, lessonNumber = lesson.OrderNumber })">
+                                                    Topic @lesson.OrderNumber : @lesson.Name
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Index", "Lesson", new { courseId = Model.Course.Id, lessonNumber = lesson.OrderNumber })">
+                                                    Topic @lesson.OrderNumber : @lesson.Name
+                                                </a>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>Topic @lesson.OrderNumber: @lesson.Name</p>
+                                    }
+                                }
+
                             </li>
-                            //Для всех смертных
-                            /*if (lesson.OrderNumber != Model.OrderNumber && lesson.IsOpen == CourseStatus.Open)
-                            {
-                                <li><a href="@Url.Action("Index", "Lesson", new {courseId = Model.Course.Id, lessonNumber = lesson.OrderNumber})">Topic @lesson.OrderNumber : @lesson.Name</a></li>
-                            }
-                            else if (lesson.OrderNumber == Model.OrderNumber)
-                            {
-                                <li>Topic @lesson.OrderNumber : @lesson.Name</li>
-                            }
-                            else
-                            {
-                                <li style="color: orangered;">Topic @lesson.OrderNumber : @lesson.Name</li>
-                            }
-                            */
                         }
                     </ul>
                 </div>
@@ -60,14 +90,21 @@
 
             <div class="courseInfo">
                 <div style="text-align: center;">
-                    @if (Model.IsOpen == CourseStatus.Open)
+                    @if (!User.IsInRole("student"))
                     {
-                        <h3><u style="text-decoration-color: #00cc00; text-decoration-style: solid; text-decoration-thickness: 2px; color: inherit;">Topic @Model.OrderNumber | @Model.Name</u></h3>
+                        @if (Model.IsOpen == CourseStatus.Open)
+                        {
+                            <h3><u style="text-decoration-color: #00cc00; text-decoration-style: solid; text-decoration-thickness: 2px; color: inherit;">Topic @Model.OrderNumber | @Model.Name</u></h3>
 
+                        }
+                        else
+                        {
+                            <h3><u style="text-decoration-color: orangered; text-decoration-style: solid; text-decoration-thickness: 2px; color: inherit;">Topic @Model.OrderNumber | @Model.Name</u></h3>
+                        }
                     }
                     else
                     {
-                        <h3><u style="text-decoration-color: orangered; text-decoration-style: solid; text-decoration-thickness: 2px; color: inherit;">Topic @Model.OrderNumber | @Model.Name</u></h3>
+                        <h3>Topic @Model.OrderNumber | @Model.Name</h3>
                     }
                     <ul>
                         @*
@@ -93,35 +130,50 @@
                 </div>
 
                 <div id="div1" style="display: none;">
-                    <a class="add" href="@Url.Action("Create", "TextWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
-                        Add part
-                    </a>
+                    @if (Model.Course.User != null)
+                    {
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin") || Model.Course.User.Id == User.GetUserId())
+                        {
+                            <a class="add" href="@Url.Action("Create", "TextWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
+                                Add part text
+                            </a>
+                        }
+                    }
                     @{
                         await Html.RenderPartialAsync("_TextWork", Model.TextWork);
                     }
                 </div>
                 <div id="div2" style="display: none;">
-                    <a class="add" href="@Url.Action("Create", "HomeWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
-                        Add Task
-                    </a>
+                    @if (Model.Course.User != null)
+                    {
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin") || Model.Course.User.Id == User.GetUserId())
+                        {
+                            <a class="add" href="@Url.Action("Create", "HomeWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
+                                Add homework
+                            </a>
+                        }
+                    }
                     @{
                         await Html.RenderPartialAsync("_HomeWork", Model.HomeWork);
                     }
                 </div>
                 <div id="div3" style="display: none;">
-                    @if (Model.LabWork.Count == 0)
+                    @if (Model.Course.User != null)
                     {
-                        <a class="add" href="@Url.Action("Create", "LabWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
-                            Add Task
-                        </a>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin") || Model.Course.User.Id == User.GetUserId() && Model.LabWork.Count == 0)
+                        {
+                            <a class="add" href="@Url.Action("Create", "LabWork", new {courseId = Model.Course.Id, lessonNumber = Model.OrderNumber})">
+                                Add Laboratory work
+                            </a>
+                        }
                     }
                     @{
                         await Html.RenderPartialAsync("_LabWork", Model.LabWork);
                     }
 
                 </div>
-           
-            
+
+
             </div>
 
         </section>

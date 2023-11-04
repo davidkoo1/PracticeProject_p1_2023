@@ -73,11 +73,11 @@ namespace PracticeProject.Controllers
                     IsOpen = courseVM.IsOpen,
                     Image = result.Url.ToString(),
                     courseGrupas = courseVM.CourseGrupas,
-                    User = await _courseRepository.GetUser(User.GetUserId().ToString()) //Над исправить
+                    User = await _courseRepository.GetUser(User.GetUserId().ToString()) //Над исправить(долго грузит мб?)
                 };
 
                 _courseRepository.Add(course);
-                return RedirectToAction("Index"); //После добавления/Изменения переход на MyCourses
+                return RedirectToAction("MyCourses", "Course");
             }
             else
             {
@@ -88,6 +88,8 @@ namespace PracticeProject.Controllers
 
         }
 
+
+        //!!User transfer data and in view Hiden
         [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -170,12 +172,13 @@ namespace PracticeProject.Controllers
 
                 _courseRepository.Update(course);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("MyCourses", "Course");
             }
 
             return View(courseVM);
 
         }
+
 
         [Authorize(Roles = "admin,Teacher")]
         public async Task<IActionResult> Delete(int id)
@@ -194,7 +197,7 @@ namespace PracticeProject.Controllers
                 return View("Error");
 
             _courseRepository.Delete(courseDetails);
-            return RedirectToAction("Index");
+            return RedirectToAction("MyCourses", "Course");
         }
     }
 }

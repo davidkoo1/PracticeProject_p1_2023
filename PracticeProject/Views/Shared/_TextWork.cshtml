@@ -1,9 +1,5 @@
 ﻿@model ICollection<TextWork>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+
 <style>
     .add {
         text-align: center;
@@ -62,14 +58,13 @@
         top: 10px; /* Adjust this value to position it properly */
         right: 10px; /* Adjust this value to position it properly */
         font-size: 20px;
-       /* background-color: lightgray;*/
+        /* background-color: lightgray;*/
         color: gray;
         border-radius: 50%; /* Make it a circle */
-        width: 0px;  /*Ensure a square shape */
+        width: 0px; /*Ensure a square shape */
         height: 10px; /* Ensure a square shape */
         display: flex;
         align-items: center;
-        
     }
 
         /* Style for the icon inside the circle */
@@ -80,12 +75,16 @@
 
 @foreach (var item in Model.OrderBy(x => x.OrderNumber))
 {
-
-
     <div class="workText">
-        <div class="pencil-icon">
-            <a href="@Url.Action("Edit", "TextWork", new {id = item.Id})"><i class="fa fa-pencil" style="color: blueviolet;"></i></a>
-        </div>
+        @if (item.Lesson.Course.User != null)
+        {
+            @if (User.Identity.IsAuthenticated && User.IsInRole("admin") || item.Lesson.Course.User.Id == User.GetUserId())
+            {
+                <div class="pencil-icon">
+                    <a href="@Url.Action("Edit", "TextWork", new {id = item.Id})"><i class="fa fa-pencil" style="color: blueviolet;"></i></a>
+                </div>
+            }
+        }
         <div class="sel">@Html.Raw(item.Task)</div>
         <div class="popup">@item.OrderNumber</div>
     </div>

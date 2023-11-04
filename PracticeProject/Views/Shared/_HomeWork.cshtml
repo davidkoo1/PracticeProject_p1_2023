@@ -1,28 +1,31 @@
 ﻿@model ICollection<HomeWork>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+
 <style>
     .hidden {
         display: none;
     }
 </style>
+
 @foreach (var item in Model)
 {
     <input type="radio" name="radio" id="radio @item.OrderNumber">
-    <label for="radio @item.OrderNumber">Homework @item.OrderNumber</label> 
-    <a href="@Url.Action("Edit", "HomeWork", new {id = item.Id})">Edit</a>
+    <label for="radio @item.OrderNumber">Homework @item.OrderNumber</label>
+    @if (item.Lesson.Course.User != null)
+    {
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin") || item.Lesson.Course.User.Id == User.GetUserId())
+        {
+            <a href="@Url.Action("Edit", "HomeWork", new {id = item.Id})">Edit</a>
+        }
+    }
     <br />
     <br />
 }
 
-@foreach(var item in Model)
+@foreach (var item in Model)
 {
-    <br/>
+    <br />
     <div id="text @item.OrderNumber" class="hidden">@Html.Raw(item.Task)</div>
-    <br/>
+    <br />
 }
 
 <script>

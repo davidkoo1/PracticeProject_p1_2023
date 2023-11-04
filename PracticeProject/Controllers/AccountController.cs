@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PracticeProject.Data;
 using PracticeProject.Models;
@@ -57,6 +58,14 @@ namespace PracticeProject.Controllers
 
         public IActionResult Register()
         {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                // Если пользователь уже аутентифицирован, показать сообщение об ошибке
+                TempData["Error"] = "You are already authenticated.";
+                return RedirectToAction("Index", "Course");
+            }
+
             var grups = _applicationDbContext.Grupas.Where(x => x.Code != "Teachers" && x.Code != "admins" && x.Code != "Students").ToList();
             ViewBag.Grups = grups;
 
@@ -108,6 +117,7 @@ namespace PracticeProject.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

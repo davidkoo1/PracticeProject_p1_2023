@@ -12,7 +12,7 @@
         }
         @if (course.Lessons.Any())
         {
-            if (course.Lessons.Count(x => x.IsOpen == CourseStatus.Open) > 0 && User.IsInRole("student"))
+            if (course.Lessons.Count(x => x.IsOpen == CourseStatus.Open) > 0)
             {
                 var lesson = course.Lessons.FirstOrDefault(x => x.IsOpen == CourseStatus.Open);
                 if (lesson != null)
@@ -22,7 +22,7 @@
                     </a>
                 }
             }
-            else
+            else if (User.IsInRole("admin"))
             {
                 <a href="@Url.Action("Index", "Lesson", new {courseId = course.Id, lessonNumber = 1})">
                     Start-->

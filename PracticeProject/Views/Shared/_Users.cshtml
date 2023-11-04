@@ -1,0 +1,27 @@
+﻿@using PracticeProject.Data.Enum;
+@model IList<User>
+
+
+@foreach (var user in Model)
+{
+
+    <div class="card-body">
+        <div class="media">
+            <a href="@Url.Action("Detail", "User", new {id = user.Id})" class="mr-3">
+                <img src="https://res.cloudinary.com/dmgcu0cm7/image/upload/v1699018563/h39nayjlutq9jv2gqecj.jpg" width="150" height="150" class="avatar">
+            </a>
+            <div class="media-body">
+                <div>
+                    <a href="@Url.Action("Detail", "User", new {id = user.Id})" class="h5 m-0">
+                        <h5>@user.Name @user.Surname</h5>
+                    </a>
+                    <small class="text-muted"><i class="icon-location"></i>@user.GrupaId</small>
+                </div>
+                <ul class="list-inline">
+                    <li class="list-inline-item text-small">@user.Email</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+}

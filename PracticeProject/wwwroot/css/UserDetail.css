@@ -1,0 +1,48 @@
+﻿h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Stylish form container */
+.form-container {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Stylish form input fields */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.user-info {
+    order: 1; /* Порядок элемента на компьютере - слева */
+    width: 50%; /* Занимает 50% ширины контейнера на компьютере */
+}
+
+.user-details {
+    order: 2; /* Порядок элемента на компьютере - справа */
+    width: 50%; /* Занимает 50% ширины контейнера на компьютере */
+}
+
+@media (max-width: 767px) {
+    /* Медиа-запрос для мобильных устройств (ширина экрана меньше 768px) */
+    .user-info,
+    .user-details {
+        width: 100%; /* Оба элемента занимают 100% ширины на мобильных устройствах */
+        order: initial; /* Сбрасываем порядок элементов */
+    }
+
+    .user-info {
+        text-align: center; /* Выравниваем изображение по центру на мобильных устройствах */
+    }
+}

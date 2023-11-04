@@ -36,6 +36,7 @@ namespace PracticeProject.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Detail(string id)
         {
             var user = await _userRepository.GetUserById(id);
@@ -44,7 +45,7 @@ namespace PracticeProject.Controllers
                 return RedirectToAction("Index", "Users");
             }
 
-            var userDetailViewModel = new UserDetailViewModel()
+            /*var userDetailViewModel = new UserDetailViewModel()
             {
                 Id = user.Id,
                 Name = user.Name,
@@ -52,8 +53,8 @@ namespace PracticeProject.Controllers
                 Grupa = user.GrupaId,
                 Email = user.Email,
                 Image = user.ProfileImage ?? "/img/avatar-male-4.jpg"
-            };
-            return View(userDetailViewModel);
+            };*/
+            return View(user);
         }
     }
 }

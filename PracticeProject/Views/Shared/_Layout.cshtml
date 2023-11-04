@@ -59,11 +59,20 @@
                         </div>
                     </form>
 
-                    <div class="ots">
-                        <i class="fas fa-envelope"></i>
-                        <i class="fas fa-inbox"></i>
-                    </div>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <div class="ots">
+                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-inbox"></i>
+                            <i class="fas fa-user"></i>
+                            <a asp-area="" asp-controller="User" asp-action="Index" style="text-decoration: none; color:white;">
+                                <i class="fas fa-users"></i>
+                            </a>
 
+                        </div>
+                    }
+
+                    
                     @if (User.Identity.IsAuthenticated)
                     {
                         <form asp-area="" asp-controller="Account" asp-action="Logout">

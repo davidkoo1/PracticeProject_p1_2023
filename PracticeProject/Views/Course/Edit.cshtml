@@ -13,6 +13,7 @@
 <div class="form-container">
     <form method="post" asp-action="Edit" enctype="multipart/form-data">
         <input type="hidden" asp-for="CourseGrupas" />
+        <input type="hidden" asp-for="CourseRoles" />
         <div class="form-group">
             <label asp-for="Name">Course Name</label>
             <input asp-for="Name" required>
@@ -42,10 +43,9 @@
 
         <div class="form-group">
             <p>
-                Grups <span id="fold"></span>
-                <div id="list">
-                    <div class="checkbox-list">
-                        @foreach (var grup in ViewBag.Grups)
+                Grups 
+
+                            @foreach (var grup in ViewBag.Grups)
                         {
                             var isChecked = Model.CourseGrupas.Any(cg => cg.IdGrupa == grup.Code); // Проверка, выбрана ли группа
 
@@ -56,14 +56,36 @@
                                 }>
                                 <span class="custom-control-label">@grup.Code</span>
                             </label>
-                            <br />
                         }
-                    </div>
-                </div>
                 @Html.ValidationMessageFor(model => model.CourseGrupas, "", new { @class = "text-danger" })
             </p>
         </div>
 
+        @if (User.IsInRole("admin"))
+        {
+            <div class="form-group">
+                <p>
+                    Roles <span id="fold"></span>
+                    <div id="list">
+                        <div class="checkbox-list">
+                            @foreach (var role in ViewBag.Roles)
+                            {
+                                var isChecked = Model.CourseRoles.Any(cr => cr.RoleId == role.Id); // Check if the role is selected
+                                
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" name="selectedRoles" value="@role.Id" class="custom-control-input" @(
+                                   isChecked ? "checked" : ""
+                                   )>
+                                    <span class="custom-control-label">@role.Name</span>
+                                </label>
+                                <br />
+                            }
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.CourseRoles, "", new { @class = "text-danger" })
+                </p>
+            </div>
+        }
 
         <button type="submit" class="submit-button">Edit</button>
     </form>

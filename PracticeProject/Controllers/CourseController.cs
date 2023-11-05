@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PracticeProject.Data;
 using PracticeProject.Data.Enum;
@@ -13,17 +14,18 @@ namespace PracticeProject.Controllers
 
         private readonly ICourseRepository _courseRepository;
         private readonly IPhotoService _photoservice;
-
-        public CourseController(ICourseRepository courseRepository, IPhotoService photoService)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public CourseController(ICourseRepository courseRepository, IPhotoService photoService, RoleManager<IdentityRole> roleManager)
         {
             _courseRepository = courseRepository;
             _photoservice = photoService;
+            _roleManager = roleManager;
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            if (User.IsInRole("student"))
+            if (!User.IsInRole("admin"))
             {
                 var coursesUser = await _courseRepository.GetAllCourseByUserGrupa();
                 return View(coursesUser);
@@ -45,12 +47,14 @@ namespace PracticeProject.Controllers
         {
             var grups = _courseRepository.GetAllGrups();
             ViewBag.Grups = grups;
+            var roles = _roleManager.Roles.ToList();
+            ViewBag.Roles = roles;
             return View();
         }
 
         [HttpPost]
         [Authorize(Roles = "admin,Teacher")]
-        public async Task<IActionResult> Create(CreateCourseViewModel courseVM, string[] selectedGrups)
+        public async Task<IActionResult> Create(CreateCourseViewModel courseVM, string[] selectedGrups, string[] selectedRoles)
         {
             if (ModelState.IsValid)
             {
@@ -67,13 +71,28 @@ namespace PracticeProject.Controllers
                     courseVM.CourseGrupas.Add(tmp);
                 }
 
+                if(selectedRoles != null)
+                {
+                    courseVM.CourseRoles = new List<CourseRole>();
+                    for (int i = 0; i < selectedRoles.Length; i++)
+                    {
+                        CourseRole tmp = new CourseRole()
+                        {
+                            RoleId = selectedRoles[i]
+                        };
+                        courseVM.CourseRoles.Add(tmp);
+                    }
+
+                }
+
                 Course course = new Course()
                 {
                     Name = courseVM.Name,
                     IsOpen = courseVM.IsOpen,
                     Image = result.Url.ToString(),
                     courseGrupas = courseVM.CourseGrupas,
-                    User = await _courseRepository.GetUser(User.GetUserId().ToString()) //Над исправить(долго грузит мб?)
+                    courseRoles = courseVM.CourseRoles,
+                    User = await _courseRepository.GetUser(User.GetUserId().ToString()) //Над исправить(долго грузит мб?)(типо присвоит Id)
                 };
 
                 _courseRepository.Add(course);
@@ -96,7 +115,8 @@ namespace PracticeProject.Controllers
 
             var grups = _courseRepository.GetAllGrups();
             ViewBag.Grups = grups;
-
+            var roles = _roleManager.Roles.ToList();
+            ViewBag.Roles = roles;
             var course = await _courseRepository.GetByIdAsync(id);
 
 
@@ -107,7 +127,8 @@ namespace PracticeProject.Controllers
                 Name= course.Name,
                 URL = course.Image,
                 IsOpen = course.IsOpen,
-                CourseGrupas = course.courseGrupas.ToList()
+                CourseGrupas = course.courseGrupas.ToList(),
+                CourseRoles = course.courseRoles.ToList()
             };
 
             return View(courseVM);
@@ -115,7 +136,7 @@ namespace PracticeProject.Controllers
 
         [HttpPost]
         [Authorize(Roles = "admin,Teacher")]
-        public async Task<IActionResult> Edit(int id, EditCourseViewModel courseVM, string[] selectedGrups)
+        public async Task<IActionResult> Edit(int id, EditCourseViewModel courseVM, string[] selectedGrups, string[] selectedRoles)
         {
             /*if (courseVM.CourseGrupas.Any())
             {
@@ -161,13 +182,24 @@ namespace PracticeProject.Controllers
                     };
                     courseVM.CourseGrupas.Add(newCourseGrupa);
                 }
+
+                foreach (var newItem in selectedRoles)
+                {
+                    CourseRole newCourseRole = new CourseRole()
+                    {
+                        IdCourse = id,
+                        RoleId = newItem,
+                    };
+                    courseVM.CourseRoles.Add(newCourseRole);
+                }
                 var course = new Course
                 {
                     Id = id,
                     Name = courseVM.Name,
                     IsOpen = courseVM.IsOpen,
                     Image = imgUrl,
-                    courseGrupas = courseVM.CourseGrupas
+                    courseGrupas = courseVM.CourseGrupas,
+                    courseRoles = courseVM.CourseRoles
                 };
 
                 _courseRepository.Update(course);

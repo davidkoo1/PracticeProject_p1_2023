@@ -11,5 +11,6 @@ namespace PracticeProject.ViewModels
         public string? URL { get; set; }
         public CourseStatus IsOpen { get; set; }
         public virtual List<CourseGrupa>? CourseGrupas { get; set; }
+        public virtual List<CourseRole>? CourseRoles { get; set; }
     }
 }

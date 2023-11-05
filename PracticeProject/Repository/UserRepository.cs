@@ -29,6 +29,7 @@ namespace PracticeProject.Repository
 
         public async Task<IEnumerable<User>> GetAllUsers() => await _dataContext.Users.ToListAsync();
 
+        public async Task<User> GetByIdAsyncNoTracking(string id) => await _dataContext.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         public async Task<IList<Course>> GetCoursesByGrupaUser(string grupaId) => await _dataContext.CourseGrupas.Where(x => x.IdGrupa == grupaId).Select(c => c.Course).ToListAsync();
 
         public async Task<string> GetCurrentGrupaByUser(string id)

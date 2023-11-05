@@ -12,5 +12,6 @@ namespace PracticeProject.Models
         public virtual User? User { get; set; }
         public virtual List<Lesson> Lessons { get; set; }
         public virtual List<CourseGrupa> courseGrupas { get; set; }
+        public virtual List<CourseRole>? courseRoles { get; set; }
     }
 }

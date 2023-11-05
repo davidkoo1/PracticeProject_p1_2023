@@ -52,6 +52,30 @@
     </p>
 </div>
 
+@if (User.IsInRole("admin"))
+{
+    <div class="form-group">
+        <p>
+            Roles <span id="fold"></span>
+            <div id="list">
+                <div class="checkbox-list">
+                    @foreach (var role in ViewBag.Roles)
+                    {
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="selectedRoles" value="@role.Id" class="custom-control-input">
+                            <span class="custom-control-label">@role.Name</span>
+                        </label>
+                        <br />
+                    }
+                </div>
+            </div>
+            @Html.ValidationMessageFor(model => model.CourseRoles, "", new { @class = "text-danger" })
+        </p>
+    </div>
+
+}
+
+
 @*<script>
     var list = document.getElementById("list");
     var fold = document.getElementById("fold");

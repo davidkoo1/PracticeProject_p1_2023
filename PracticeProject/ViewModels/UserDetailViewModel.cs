@@ -1,4 +1,6 @@
-﻿namespace PracticeProject.ViewModels
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace PracticeProject.ViewModels
 {
     public class UserDetailViewModel
     {

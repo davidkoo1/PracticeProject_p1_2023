@@ -6,6 +6,7 @@ namespace PracticeProject.Interface
     {
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetUserById(string id);
+        Task<User> GetByIdAsyncNoTracking(string id);
         Task<IList<Course>> GetCoursesByGrupaUser(string grupaId);
         Task<IList<User>> GetUsersByGrupaUser(string grupaId);
         Task<string> GetCurrentGrupaByUser(string id);

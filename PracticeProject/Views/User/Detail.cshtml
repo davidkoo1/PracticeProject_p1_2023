@@ -62,7 +62,13 @@
                     <div class="align-items-center">
                         @if (Model.Id == User.GetUserId())
                         {
-                            <a class="btn-like-link" asp-area="" asp-controller="User" asp-action="EditProfile">
+                            <a class="btn-like-link" href="@Url.Action("EditProfile", "User", new {id = User.GetUserId()})">
+                                <i class="fas fa-user"></i> Edit
+                            </a>
+                        }
+                        @if (!User.IsInRole("student") && Model.Id != User.GetUserId())
+                        {
+                            <a class="btn-like-link" href="@Url.Action("EditProfile", "User", new {id = Model.Id})">
                                 <i class="fas fa-user"></i> Edit
                             </a>
                         }

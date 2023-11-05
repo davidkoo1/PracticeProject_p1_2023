@@ -13,29 +13,79 @@
             <label asp-for="Image">ImageFile</label>
             <input asp-for="Image" type="file">
         </div>
-        @*if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        @if (!User.IsInRole("student"))
         {
+            <input type="hidden" asp-for="Roles" />
+
+            <div class="form-group">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" required>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Surname">Surname</label>
+                <input asp-for="Surname" required>
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" required>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Grupa">Grupa</label>
+                <input asp-for="Grupa" required>
+                <span asp-validation-for="Grupa" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <p>
-                    Roles <span id="fold"></span>
-                    <div id="list">
-                        <div class="checkbox-list">
-                            @foreach (var role in ViewBag.AllRoles)
-                            {
-                                var isChecked = Model.Roles.Contains(role.ToString()); // Check if the role is assigned to the user
+                    Grups
+                    @foreach (var grup in ViewBag.Grups)
+                    {
+                        var isChecked = grup.Code == Model.Grupa ? true : false; // Проверка, выбрана ли группа
 
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" name="selectedRoles" value="@role" class="custom-control-input" @(isChecked ? "checked" : "")>
-                                    <span class="custom-control-label">@role</span>
-                                </label>
-                                <br />
-                            }
-                        </div>
-                    </div>
-                    @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="selectedGrupa" value="@grup.Code" class="custom-control-input" @if (isChecked)
+                            {
+                                <text>checked</text>
+                            }>
+                            <span class="custom-control-label">@grup.Code</span>
+                        </label>
+                    }
+                    @Html.ValidationMessageFor(model => model.Grupa, "", new { @class = "text-danger" })
                 </p>
             </div>
-       }*@
+
+            @if (User.IsInRole("admin"))
+            {
+                <div class="form-group">
+                    <p>
+                        Roles <span id="fold"></span>
+                        <div id="list">
+                            <div class="checkbox-list">
+                                @foreach (var role in ViewBag.Roles)
+                                {
+                                    var isChecked = Model.Roles.Contains(role.Name); // Check if the role is selected
+
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="selectedRoles" value="@role.Id" class="custom-control-input" @(
+                                   isChecked ? "checked" : ""
+                                   )>
+                                        <span class="custom-control-label">@role.Name</span>
+                                    </label>
+                                    <br />
+                                }
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+                    </p>
+                </div>
+            }
+        }
+
             <button type="submit" class="submit-button">Edit</button>
         </form>
     </div>

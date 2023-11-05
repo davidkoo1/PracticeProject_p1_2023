@@ -11,5 +11,6 @@ namespace PracticeProject.ViewModels
 
        // public CreateLessonViewModel? LessonVM { get; set; }
         public virtual List<CourseGrupa>? CourseGrupas { get; set; }
+        public virtual List<CourseRole>? CourseRoles { get; set; }
     }
 }

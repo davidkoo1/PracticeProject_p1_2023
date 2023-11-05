@@ -201,6 +201,23 @@ namespace PracticeProject.Migrations
                     b.ToTable("CourseGrupas");
                 });
 
+            modelBuilder.Entity("PracticeProject.Models.CourseRole", b =>
+                {
+                    b.Property<int>("IdCourse")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(1);
+
+                    b.HasKey("IdCourse", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("CourseRoles");
+                });
+
             modelBuilder.Entity("PracticeProject.Models.Grupa", b =>
                 {
                     b.Property<string>("Code")
@@ -475,6 +492,25 @@ namespace PracticeProject.Migrations
                     b.Navigation("Grupa");
                 });
 
+            modelBuilder.Entity("PracticeProject.Models.CourseRole", b =>
+                {
+                    b.HasOne("PracticeProject.Models.Course", "Course")
+                        .WithMany("courseRoles")
+                        .HasForeignKey("IdCourse")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("PracticeProject.Models.HomeWork", b =>
                 {
                     b.HasOne("PracticeProject.Models.Lesson", "Lesson")
@@ -533,6 +569,8 @@ namespace PracticeProject.Migrations
                     b.Navigation("Lessons");
 
                     b.Navigation("courseGrupas");
+
+                    b.Navigation("courseRoles");
                 });
 
             modelBuilder.Entity("PracticeProject.Models.Grupa", b =>

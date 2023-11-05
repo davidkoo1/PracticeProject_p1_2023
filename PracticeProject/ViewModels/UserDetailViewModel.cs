@@ -8,5 +8,6 @@
         public string Email { get; set; }
         public string? Grupa { get; set; }
         public string? Image { get; set; }
+        public List<string> Roles { get; set; }
     }
 }

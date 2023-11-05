@@ -1,5 +1,6 @@
 ﻿@using PracticeProject.Interface;
-@model User
+@using PracticeProject.ViewModels;
+@model UserDetailViewModel
 @inject IUserRepository UserRepository
 
 @{
@@ -12,12 +13,34 @@
 <link rel="stylesheet" href="~/css/courses.css">
 <link rel="stylesheet" href="~/css/UserDetail.css">
 
+<style>
+    /* CSS to style the anchor as a button */
+    .btn-like-link {
+        display: inline-block;
+        padding: 10px 20px; /* Adjust the padding as needed */
+        background-color: #007bff; /* Button background color */
+        color: #fff; /* Text color */
+        text-decoration: none; /* Remove underline from links */
+        border: 1px solid #007bff; /* Button border */
+        border-radius: 4px; /* Rounded corners */
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s; /* Add a transition effect */
+    }
 
+        .btn-like-link:hover {
+            background-color: #0056b3; /* Button background color on hover */
+            border: 1px solid #0056b3; /* Button border on hover */
+            color: #fff; /* Text color on hover */
+            text-decoration: none; /* Remove underline on hover */
+        }
+
+
+</style>
 
 @{
     var currentGrupa = await UserRepository.GetCurrentGrupaByUser(User.GetUserId());
 }
-@if (User.Identity.IsAuthenticated && Model.GrupaId == currentGrupa || !User.IsInRole("student"))//&& !User.IsInRole("admin"))
+@if (User.Identity.IsAuthenticated && Model.Grupa == currentGrupa || !User.IsInRole("student"))//&& !User.IsInRole("admin"))
 {
     <div class="main-container">
 
@@ -25,7 +48,7 @@
 
         <div class="form-container">
             <div class="user-info">
-                <img src="https://res.cloudinary.com/dmgcu0cm7/image/upload/v1699018563/h39nayjlutq9jv2gqecj.jpg" width="240" style="border-radius:10px;" />
+                <img src="@Model.Image" width="240" style="border-radius:10px;" />
             </div>
             <div class="user-details">
                 <h1>@Model.Name | @Model.Surname</h1>
@@ -33,13 +56,17 @@
                     <p>Email: @Model.Email</p>
                 </div>
                 <div class="form-group">
-                    <p>Grupa: @Model.GrupaId</p>
+                    <p>Grupa: @Model.Grupa</p>
                 </div>
                 <div class="form-group">
                     <div class="align-items-center">
-                        <button class="btn btn-outline-primary" data-toggle="button">
-                            <i class="fas fa-user"></i> Edit
-                        </button>
+                        @if (Model.Id == User.GetUserId())
+                        {
+                            <a class="btn-like-link" asp-area="" asp-controller="User" asp-action="EditProfile">
+                                <i class="fas fa-user"></i> Edit
+                            </a>
+                        }
+
                         <button class="btn btn-outline-primary" data-toggle="button">
                             <i class="fas fa-envelope"></i>Message
                         </button>
@@ -107,7 +134,7 @@
                 <div class="tab-pane fade active show" id="courses" role="tabpanel" aria-labelledby="courses-tab">
                     <section class="courses-container">
                         @{
-                            var courses = await UserRepository.GetCoursesByGrupaUser(Model.GrupaId);
+                            var courses = await UserRepository.GetCoursesByGrupaUser(Model.Grupa);
                             if (courses != null)
                             {
                                 await Html.RenderPartialAsync("_Courses", courses);
@@ -267,8 +294,12 @@
                             <div class="col-12 col-md-6">
                                 <div class="card" style="margin-top:10px;">
                                     @{
-                                        var users = await UserRepository.GetUsersByGrupaUser(Model.GrupaId);
-                                        users.Remove(Model);
+                                        var users = await UserRepository.GetUsersByGrupaUser(Model.Grupa);
+                                        
+                                        User userToRemove = users.FirstOrDefault(x => x.Id == Model.Id);
+                                        users.Remove(userToRemove);
+                                        
+
                                         if (users != null)
                                         {
                                             await Html.RenderPartialAsync("_Users", users);

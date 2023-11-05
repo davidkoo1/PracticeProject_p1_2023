@@ -1,0 +1,41 @@
+﻿@using PracticeProject.ViewModels;
+@model EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Account Settings";
+}
+<link rel="stylesheet" href="~/css/edits.css">
+
+<h1>Account Settings</h1>
+<div class="form-container">
+    <form method="post" asp-action="EditProfile" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Image">ImageFile</label>
+            <input asp-for="Image" type="file">
+        </div>
+        @*if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <div class="form-group">
+                <p>
+                    Roles <span id="fold"></span>
+                    <div id="list">
+                        <div class="checkbox-list">
+                            @foreach (var role in ViewBag.AllRoles)
+                            {
+                                var isChecked = Model.Roles.Contains(role.ToString()); // Check if the role is assigned to the user
+
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" name="selectedRoles" value="@role" class="custom-control-input" @(isChecked ? "checked" : "")>
+                                    <span class="custom-control-label">@role</span>
+                                </label>
+                                <br />
+                            }
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+                </p>
+            </div>
+       }*@
+            <button type="submit" class="submit-button">Edit</button>
+        </form>
+    </div>

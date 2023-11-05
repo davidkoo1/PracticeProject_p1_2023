@@ -66,7 +66,7 @@ namespace PracticeProject.Controllers
                 return RedirectToAction("Index", "Course");
             }
 
-            var grups = _applicationDbContext.Grupas.Where(x => x.Code != "Teachers" && x.Code != "admins" && x.Code != "Students").ToList();
+            var grups = _applicationDbContext.Grupas.ToList();
             ViewBag.Grups = grups;
 
 

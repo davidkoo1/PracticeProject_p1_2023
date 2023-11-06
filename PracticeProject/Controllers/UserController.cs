@@ -82,6 +82,7 @@ namespace PracticeProject.Controllers
         {
             //var user = await _userManager.GetUserAsync(User);
             var user = await _userRepository.GetByIdAsyncNoTracking(id);
+
             if (user == null)
             {
                 return View("Error");
@@ -90,7 +91,7 @@ namespace PracticeProject.Controllers
 
             var editMV = new EditProfileViewModel()
             {
-
+                UserName = user.UserName,
                 Name = user.Name,
                 Surname = user.Surname,
                 Email = user.Email,
@@ -163,12 +164,17 @@ namespace PracticeProject.Controllers
         */
         [HttpPost]
         [Authorize(Roles = "admin, Teacher")]
-        public async Task<IActionResult> EditProfile(string id, EditProfileViewModel editVM, string selectedGrupa, string[] selectedRoles)
+        public async Task<IActionResult> EditProfile(string id, EditProfileViewModel editVM, string[] selectedRoles)
         {
-            var user = await _userRepository.GetByIdAsyncNoTracking(id);
+            var grups = _courseRepository.GetAllGrups();
+            ViewBag.Grups = grups;
+            var roles = _roleManager.Roles.ToList();
+            ViewBag.Roles = roles;
+
+            var user = await _userRepository.GetUserById(id);
             if (user != null)
             {
-                //Img upload
+                //Загрузка изображения
                 string imgUrl = "";
                 if (editVM.Image != null)
                 {
@@ -179,7 +185,7 @@ namespace PracticeProject.Controllers
                     }
                     catch (Exception)
                     {
-                        ModelState.AddModelError("", "Could not delete photo");
+                        ModelState.AddModelError("", "Не удалось удалить фото");
                         return View(editVM);
                     }
 
@@ -190,43 +196,27 @@ namespace PracticeProject.Controllers
                     imgUrl = user.ProfileImage;
 
 
-                //Other
-                if (selectedGrupa != editVM.Grupa)
-                    editVM.Grupa = selectedGrupa;
-                /*
-                foreach (var newItem in selectedRoles)
-                {
-                    editVM.Roles.Add(newItem);
-                }
-                */
-                var User = new User
-                { 
-                    Id = id,
-                    Name = editVM.Name,
-                    Surname = editVM.Surname,
-                    Email = editVM.Email,
-                    GrupaId = editVM.Grupa,
-                    ProfileImage = imgUrl
-                };
+                user.Name = editVM.Name;
+                user.Surname = editVM.Surname;
+                user.Email = editVM.Email;
+                user.GrupaId = editVM.Grupa;
+                user.ProfileImage = imgUrl;
 
                 var userRoles = await _userManager.GetRolesAsync(user);
 
-                var result = await _userManager.RemoveFromRolesAsync(User, userRoles.ToList());
+                var result = await _userManager.RemoveFromRolesAsync(user, userRoles.ToList());
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRolesAsync(User, selectedRoles);
-                    await _userManager.UpdateAsync(User);
+                    await _userManager.AddToRolesAsync(user, selectedRoles);
+                    await _userManager.UpdateAsync(user);
                     return RedirectToAction("Detail", "User", new { user.Id });
                 }
-
 
                 return View(editVM);
             }
 
             return View(editVM);
-
-            
         }
     }
 }

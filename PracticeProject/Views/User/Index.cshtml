@@ -21,8 +21,8 @@
                         <thead>
                             <tr>
                                 <th style="color: black;" scope="col">User</th>
-                                <th scope="col">Profile</th>
-                                <th scope="col">Group</th>
+                                <th style="color: black;" scope="col">Profile</th>
+                                <th style="color: black;" scope="col">Group/Role</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,7 +31,7 @@
                                 <tr class="bg-white">
                                     <td>
                                         <div class="media align-items-center">
-                                            <img alt="Image profile avatar" src="https://res.cloudinary.com/dmgcu0cm7/image/upload/v1699018563/h39nayjlutq9jv2gqecj.jpg" class="avatar">
+                                            <img alt="Image profile avatar" src="@user.Image" class="avatar">
                                             <div class="media-body">
                                                 <h5 class="mb-0">@user.Name @user.Surname</h5>
                                             </div>
@@ -42,7 +42,20 @@
                                             View Profile
                                         </a>
                                     </td>
-                                    <td>@user.Grupa</td>
+                                    @if (user.Grupa != null)
+                                    {
+                                        <td>@user.Grupa</td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @foreach (var role in user.RolesName)
+                                            {
+                                                @role
+                                                <br/>
+                                            }
+                                        </td>
+                                    }
                                 </tr>
                             }
                         </tbody>

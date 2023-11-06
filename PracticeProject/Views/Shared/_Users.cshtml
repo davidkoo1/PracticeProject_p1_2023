@@ -4,11 +4,19 @@
 
 @foreach (var user in Model)
 {
-
+    <div class="card" style="margin-top:10px;">
     <div class="card-body">
         <div class="media">
             <a href="@Url.Action("Detail", "User", new {id = user.Id})" class="mr-3">
-                <img src="https://res.cloudinary.com/dmgcu0cm7/image/upload/v1699018563/h39nayjlutq9jv2gqecj.jpg" width="150" height="150" class="avatar">
+                    @if (user.ProfileImage != null)
+                    {
+                        <img src="@user.ProfileImage" width="150" height="150" class="avatar"/>
+                    }
+                    else
+                    {
+                        <img src="/img/avatar-male-4.jpg" width="150" height="150" class="avatar" />
+                    }
+
             </a>
             <div class="media-body">
                 <div>
@@ -23,5 +31,5 @@
             </div>
         </div>
     </div>
-
+    </div>
 }

@@ -43,12 +43,12 @@
                             @if (!User.IsInRole("student"))
                             {
                                 <li class="nav-item" role="presentation"><a class="nav-link" asp-area="" asp-controller="Course" asp-action="MyCourses">MyCourses</a></li>
-                            }
 
-                            <li class="nav-item" role="presentation"><a class="nav-link" href="#">Help</a></li>
+
+                                <li class="nav-item" role="presentation"><a class="nav-link" href="#">Help</a></li>
+                            }
                         }
                     </ul>
-
                     <form class="form-inline ml-auto" target="_self">
                         <div class="form-group">
                             <label for="search-field">
@@ -62,20 +62,20 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <div class="ots">
-                            <i class="fas fa-envelope"></i>
-                            <i class="fas fa-inbox"></i>
-                            <a style="text-decoration: none; color:white;" href="@Url.Action("Detail", "User", new {id = User.GetUserId()})"><i class="fas fa-user"></i></a>
+
                             @if (User.IsInRole("admin"))
                             {
+                                <i class="fas fa-envelope"></i>
+                                <i class="fas fa-inbox"></i>
                                 <a asp-area="" asp-controller="User" asp-action="Index" style="text-decoration: none; color:white;">
                                     <i class="fas fa-users"></i>
                                 </a>
                             }
-
+                            <a style="text-decoration: none; color:white;" href="@Url.Action("Detail", "User", new {id = User.GetUserId()})"><i class="fas fa-user"></i></a>
                         </div>
                     }
 
-                    
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         <form asp-area="" asp-controller="Account" asp-action="Logout">
